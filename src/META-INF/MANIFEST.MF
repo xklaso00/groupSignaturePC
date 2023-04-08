@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+cz.vut.feec.xklaso00.semestralproject.Main-Class: cz.vut.feec.xklaso00.semestralproject.Main
+
