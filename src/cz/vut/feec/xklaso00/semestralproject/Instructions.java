@@ -31,6 +31,11 @@ public class Instructions {
             (byte)0x00,
             (byte)0x00,
             };
+    private static final byte[] SIGNTHISCOMMAND=new byte[]{(byte)0x80, //WITH THIS COMMAND we send hash of file to sign
+            (byte)0x04,
+            (byte)0x00,
+            (byte)0x00,
+    };
     private static byte[] A_OKAY ={ (byte)0x90,
             (byte)0x00};
     private static byte[] NOT_YET ={ (byte)0xFF,
@@ -110,9 +115,28 @@ public class Instructions {
 
         } catch (IOException e) {
             System.out.println("Error in createE2COM");
+            e.printStackTrace();
         }
         return null;
 
+    }
+    public static byte[] makeSignFileCommand(byte[] hash){
+        ByteArrayOutputStream bo=new ByteArrayOutputStream();
+        try {
+            bo.write(SIGNTHISCOMMAND);
+            int lenOfHash=hash.length;
+            BigInteger lenBig=new BigInteger(String.valueOf(lenOfHash));
+            byte[] lenOfData=lenBig.toByteArray();
+            bo.write(lenOfData);
+            bo.write(hash);
+            bo.write((byte)0x00);
+            byte [] com=bo.toByteArray();
+            return com;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     public static byte[] getCOMGIVEZKUSER() {
         return COMGIVEZKUSER;

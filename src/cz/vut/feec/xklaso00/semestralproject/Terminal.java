@@ -1,13 +1,17 @@
 package cz.vut.feec.xklaso00.semestralproject;
 
+import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
 import com.herumi.mcl.G2;
 
 import javax.smartcardio.*;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 public class Terminal {
     private Card card = null;
@@ -88,6 +92,13 @@ public class Terminal {
                 UserZKObject userZK=(UserZKObject) ois.readObject();
                 boolean secondProof=server.checkPKUser(userZK.getZets(),userZK.getE2(),userZK.getC2Goth(),userZK.geteClientHash(),userZK.getClientPubKey());
                 System.out.println("is client NIZKPK legit "+secondProof);
+                if(!secondProof)
+                    return -5;
+                //here we add the user to database of pkInvs for open Func
+                server.saveUserKeyToFile(userZK.getClientPubKey(),userZK.getClientID());
+                //we write out for test
+                server.getActiveManagerFile().writeOutUsersSaved();
+
                 G1 e2=server.computePubManager(userZK.getE2());
                 byte[] e2COM= Instructions.createE2COM(e2);
                 System.out.println("Sending e2 ");
@@ -107,5 +118,62 @@ public class Terminal {
             throw new RuntimeException(e);
         }
         return 0;
+    }
+    //pass the hash of the file modded with n
+    public int sendFileToSign(byte[] fileHash){
+        InitializeConnection();
+        byte[] fileCom=Instructions.makeSignFileCommand(fileHash);
+        try {
+            boolean isItYet=false;
+            byte[] byteResponse=null;
+            while (!isItYet){
+                ResponseAPDU responseAPDU=channel.transmit(new CommandAPDU(fileCom));
+                byteResponse=responseAPDU.getBytes();
+                if(Instructions.isEqual(byteResponse,Instructions.getNotYet())){
+                    isItYet=false;
+                    sleep(30);
+                }
+                else
+                    isItYet=true;
+            }
+            //ResponseAPDU responseAPDU=channel.transmit(new CommandAPDU(fileCom));
+            //byte[] byteResponse=responseAPDU.getBytes();
+            card.disconnect(true);
+            byte[] SignObject= Arrays.copyOfRange(byteResponse,0,byteResponse.length-2);
+            //should check the last 2 bytes here
+            byte [] checkBytes=Arrays.copyOfRange(byteResponse,byteResponse.length-2,byteResponse.length);
+
+            if(!(Instructions.isEqual(checkBytes,Instructions.getaOkay()))){
+                System.out.println("Probably did nto get all bytes");
+                return -2;
+            }
+            ByteArrayInputStream bis = new ByteArrayInputStream(SignObject);
+            ObjectInputStream ois=new ObjectInputStream(bis);
+            SignatureProof signatureProof= (SignatureProof) ois.readObject();
+            G2 groupPublicKey=FileManagerClass.loadPublicKeyForGroup(signatureProof.groupID);
+            if(groupPublicKey==null){
+                System.out.println("Cannot load the key");
+                return -4;
+            }
+            BigInteger hashBig=new BigInteger(fileHash);
+            Fr hashFr=new Fr(hashBig.toString(10));
+            boolean LegitSignature=Server.checkProof(signatureProof,hashFr,groupPublicKey);
+
+            if(LegitSignature){
+                System.out.println("SIG LEGIT");
+                //add saving to file the signature
+                return 0;
+            }
+            else {
+                System.out.println("NOT LEGIT SIG");
+                return -5;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -3;
+        }
+
     }
 }

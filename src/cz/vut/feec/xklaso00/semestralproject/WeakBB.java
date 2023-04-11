@@ -70,6 +70,9 @@ public class WeakBB {
 
         return comp.equals(result);
 
-
+    }
+    public static BigInteger genNinBigInt()
+    {
+        return new BigInteger("2523648240000001BA344D8000000007FF9F800000000010A10000000000000D",16);
     }
 }

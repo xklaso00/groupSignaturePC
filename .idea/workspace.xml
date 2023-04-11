@@ -6,50 +6,21 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/GroupSig_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/libs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GroupSig.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libs/mcljava-x64.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/CipherText.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/Elgamal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/ElgamalJNI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/Fp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/Fr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/G1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/G2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/GT.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/Mcl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/MclConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/MclJNI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/PrivateKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/PublicKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/herumi/mcl/SWIGTYPE_p_bool.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileManagerClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Instructions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierFunctions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierKeyPair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierPrivateKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierPublicKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ServerTwoPartyObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/SignatureProof.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Terminal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserZKObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/WeakBB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/managerFile.java" afterDir="false" />
+    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="Added terminal APDU commands for the 2party, Started working on files for manager">
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileOfGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileManagerClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileManagerClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Instructions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Instructions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ServerTwoPartyObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ServerTwoPartyObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/SignatureProof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/SignatureProof.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserZKObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserZKObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/WeakBB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/WeakBB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/managerFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileOfManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +86,14 @@
       <option name="presentableId" value="Default" />
       <updated>1670085541397</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added terminal APDU commands for the 2party, Started working on files for manager">
+      <created>1680953332069</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1680953332069</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -127,5 +106,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added terminal APDU commands for the 2party, Started working on files for manager" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added terminal APDU commands for the 2party, Started working on files for manager" />
   </component>
 </project>

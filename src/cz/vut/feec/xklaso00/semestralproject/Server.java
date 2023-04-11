@@ -10,6 +10,7 @@ import com.herumi.mcl.Mcl;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 
 public class Server {
     String TAG= "TimeStamps";
@@ -17,17 +18,46 @@ public class Server {
     private PaillierKeyPair kp;
     private BigInteger r;
     private BigInteger rDash;
-    private BigInteger serverPrivateECKey = new BigInteger("216be04bcef01b36dc52814b38963f028e5d414856e467ebd0c069efdce5fb4a",16);
+    private BigInteger serverPrivateECKey ;
     private G1 pubManager;
     private Fr ManKey;
     private BigInteger e1;
     private BigInteger cGoth;
     private boolean useGMP=false;
+    private G2 managerPublicKey;
+    private BigInteger managerID;
     private BigInteger eHash;
+    private FileOfManager activeManagerFile;
+    //constructor for creating new manager
     public Server(){
+        SecureRandom random=new SecureRandom();
+        serverPrivateECKey=new BigInteger(254,random);
+       // serverPrivateECKey = new BigInteger("216be04bcef01b36dc52814b38963f028e5d414856e467ebd0c069efdce5fb4a",16);
 
         n=new BigInteger("2523648240000001BA344D8000000007FF9F800000000010A10000000000000D",16);
+        serverPrivateECKey=serverPrivateECKey.mod(n);
         ManKey= new Fr(serverPrivateECKey.toString(),10);
+        BigInteger managerID=new BigInteger(32,random);
+        FileOfManager manFile=new FileOfManager(serverPrivateECKey,managerID);
+        String managerFileName=FileManagerClass.saveManagerKey(manFile);
+        managerPublicKey=new G2();
+        Mcl.mul(managerPublicKey,WeakBB.getG2(),ManKey);
+        FileOfGroup fileOfGroup=new FileOfGroup(managerID,managerPublicKey);
+        String fileName=FileManagerClass.saveGroupCertToFile(fileOfGroup);
+        activeManagerFile=manFile;
+
+    }
+    //constructor with loading manager file
+    public Server(String managerFileName){
+        FileOfManager manFile=FileManagerClass.loadManagerFile(managerFileName);
+        serverPrivateECKey=manFile.getPrivateKey();
+        n=new BigInteger("2523648240000001BA344D8000000007FF9F800000000010A10000000000000D",16);
+        ManKey= new Fr(serverPrivateECKey.toString(),10);
+        System.out.println("mankey is"+ManKey.toString());
+        managerID = manFile.getManagerID();
+        managerPublicKey=new G2();
+        Mcl.mul(managerPublicKey,WeakBB.getG2(),ManKey);
+        activeManagerFile=manFile;
     }
 
     public PaillierKeyPair runSetUpOfPaillier(){
@@ -180,6 +210,12 @@ public class Server {
         else
             return false;
     }
+    public void saveUserKeyToFile(G2 pubKeyUser,BigInteger userID){
+        G2 invPubKey=new G2();
+        Mcl.neg(invPubKey,pubKeyUser);
+        activeManagerFile.addUserToManagerHashMap(userID,invPubKey);
+        FileManagerClass.saveManagerKey(activeManagerFile);
+    }
 
     public BigInteger myModPow(BigInteger num,BigInteger exponent,BigInteger modulus){
         if(useGMP==false) {
@@ -204,16 +240,16 @@ public class Server {
         Mcl.mul(pubManager,pubManager,xFr);
         return pubManager;
     }
-    public boolean checkProof(SignatureProof sp, Fr msg){
+    public static boolean checkProof(SignatureProof sp, Fr msg,G2 groupPublicKey){
         //checking of pairing
         GT pair1 =new GT();
         G1 SiG=new G1();
-        Mcl.add(SiG,sp.SiDash,sp.gToR);
+        Mcl.add(SiG,sp.getSiDash(),sp.getGToR());
         Mcl.pairing(pair1,SiG,WeakBB.getG2());
-        G2 PK = new G2();
-        Mcl.mul(PK,WeakBB.getG2(),ManKey);
+        //G2 PK = new G2();
+        //Mcl.mul(PK,WeakBB.getG2(),ManKey);
         GT pair2 = new GT();
-        Mcl.pairing(pair2,sp.SiAph,PK);
+        Mcl.pairing(pair2,sp.getSiAph(),groupPublicKey);
 
 
         if(!pair1.equals(pair2)){
@@ -223,23 +259,23 @@ public class Server {
         //checking of t, later checking of hash
         G1 t2= new G1();
         G1 add1= new G1();
-        Mcl.add(add1,sp.SiDash,sp.gToR);
-        Mcl.mul(add1,add1,sp.E);
+        Mcl.add(add1,sp.getSiDash(),sp.getGToR());
+        Mcl.mul(add1,add1,sp.getE());
         //now we have Si*g' to e
         G1 SiToSSki= new G1();
-        Mcl.mul(SiToSSki,sp.SiAph,sp.SSki);
+        Mcl.mul(SiToSSki,sp.getSiAph(),sp.getSSki());
         G1 gToSr= new G1();
-        Mcl.mul(gToSr,WeakBB.getG1(),sp.Sr);
+        Mcl.mul(gToSr,WeakBB.getG1(),sp.getSr());
 
         Mcl.add(t2,add1,SiToSSki);
         Mcl.add(t2,t2,gToSr);
-        Fr e2= computeHashForCheck(sp.gToR,sp.SiAph,sp.SiDash,msg,t2);
+        Fr e2= computeHashForCheck(sp.getGToR(),sp.getSiAph(),sp.getSiDash(),msg,t2);
 
         //Log.i("ProofCheck","t1= "+t.toString());
         //Log.i("ProofCheck","t2= "+t2.toString());
         //Log.i("ProofCheck"," are ts same? "+t.equals(t2));
 
-        if(sp.E.equals(e2))
+        if(sp.getE().equals(e2))
             return true;
         else
             return false;
@@ -247,7 +283,7 @@ public class Server {
 
 
     }
-    public Fr computeHashForCheck(G1 GtoR,G1 SiAph, G1 SiDash, Fr msg, G1 t2){
+    public static Fr computeHashForCheck(G1 GtoR,G1 SiAph, G1 SiDash, Fr msg, G1 t2){
         MessageDigest hashing;
         try {
             hashing= MessageDigest.getInstance("SHA-256");
@@ -261,7 +297,7 @@ public class Server {
             hashing.update(chained);
             byte [] hash= hashing.digest();
             BigInteger hashBig= new BigInteger(hash);
-            hashBig= hashBig.mod(n);
+            hashBig= hashBig.mod(WeakBB.genNinBigInt());
 
             Fr hashFrCut=new Fr(hashBig.toString(10));
             return hashFrCut;
@@ -283,6 +319,7 @@ public class Server {
         return 0;
     }
 
+
     public BigInteger getcGoth() {
         return cGoth;
     }
@@ -291,8 +328,20 @@ public class Server {
         return e1;
     }
 
+    public G2 getManagerPublicKey() {
+        return managerPublicKey;
+    }
+
+    public FileOfManager getActiveManagerFile() {
+        return activeManagerFile;
+    }
+
     public BigInteger geteHash() {
         return eHash;
     }
     public native String modPowC(String a, String b, String mod);
+
+    public BigInteger getManagerID() {
+        return managerID;
+    }
 }

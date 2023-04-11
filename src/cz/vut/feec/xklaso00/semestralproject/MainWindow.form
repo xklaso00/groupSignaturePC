@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="cz.vut.feec.xklaso00.semestralproject.MainWindow">
-  <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="8" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="9" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="459" height="400"/>
@@ -28,7 +28,7 @@
       </component>
       <component id="8f88e" class="javax.swing.JButton" binding="verifyButton" default-binding="true">
         <constraints>
-          <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Verify"/>
@@ -36,7 +36,7 @@
       </component>
       <component id="ed737" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
         <constraints>
-          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="100" height="100"/>
           </grid>
         </constraints>
@@ -64,7 +64,7 @@
       </component>
       <component id="f62e6" class="javax.swing.JLabel" binding="legitLabel">
         <constraints>
-          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="50" height="20"/>
           </grid>
         </constraints>
@@ -96,6 +96,30 @@
         </constraints>
         <properties>
           <text value=""/>
+        </properties>
+      </component>
+      <component id="792e4" class="javax.swing.JButton" binding="loadManagerButton">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Load Manager File"/>
+        </properties>
+      </component>
+      <component id="f0a55" class="javax.swing.JLabel" binding="managerLoadText">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Click to load manager file"/>
+        </properties>
+      </component>
+      <component id="ba441" class="javax.swing.JButton" binding="nfcSign">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="NFC SIGN"/>
         </properties>
       </component>
     </children>

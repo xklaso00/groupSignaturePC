@@ -32,7 +32,7 @@ public class Client {
     private Fr SSki;
     private Fr Sr;
     private G1 t;
-
+    private BigInteger groupID=new BigInteger("53763a7a",16);
 
     private BigInteger eHashClient;
 
@@ -254,7 +254,7 @@ public class Client {
         Mcl.mul(eSki,e,UserKey);
         Mcl.add(SSki,randSki,eSki); //here we compute SSki
         //end of 2 proofs computation
-        return new SignatureProof(GtoR,SiAph,SiDash,e,Sr,SSki);
+        return new SignatureProof(GtoR,SiAph,SiDash,e,Sr,SSki,groupID);
     }
     public Fr createEHash(Fr msg){
         MessageDigest hashing;

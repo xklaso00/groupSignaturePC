@@ -25,6 +25,9 @@ public class MainWindow {
     private JLabel legitLabel;
     private JButton nfcSimulate;
     private JLabel goNFClabel1;
+    private JButton loadManagerButton;
+    private JLabel managerLoadText;
+    private JButton nfcSign;
     private boolean computed=false;
     JFrame frame= new JFrame("Group signature with multi-party computation");
     Server server;
@@ -58,7 +61,8 @@ public class MainWindow {
         frame.setLocationRelativeTo(null);
 
         frame.setVisible(true);
-        server=new Server();
+        //server=new Server();
+        server=new Server("files/53763a7a_key.ser");
         client=new Client();
 
 
@@ -120,7 +124,7 @@ public class MainWindow {
                 String message= textArea1.getText();
                 Fr hashOfTheMessage=hashMsg(message);
                 st=System.nanoTime();
-                boolean legitProof= server.checkProof(signatureProof,hashOfTheMessage);
+                boolean legitProof= server.checkProof(signatureProof,hashOfTheMessage,server.getManagerPublicKey());
                 et=System.nanoTime();
                 System.out.println("The verification took "+((et-st)/1000)+" ns");
                 System.out.println("legit? "+legitProof);
@@ -137,7 +141,7 @@ public class MainWindow {
                 server.runSetUpOfPaillier();
                 BigInteger e1= server.computeE1();
                 BigInteger[] Zs=server.createZKIssuer();
-                ServerTwoPartyObject toSend=new ServerTwoPartyObject(server.getPaillierPublicKeyFromServer(),e1,Zs,server.getcGoth(),server.geteHash());
+                ServerTwoPartyObject toSend=new ServerTwoPartyObject(server.getPaillierPublicKeyFromServer(),e1,Zs,server.getcGoth(),server.geteHash(),server.getManagerID());
                 SwingWorker<Boolean, Void> worker2 = new SwingWorker<Boolean, Void>() {
                     @Override
                     protected Boolean doInBackground() throws Exception {
@@ -202,6 +206,22 @@ public class MainWindow {
 
                 //worker2.execute();
 
+            }
+        });
+        loadManagerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fileNameToLoad=FileManagerClass.chooseFile("Choose a manager file (_key.ser)");
+                server=new Server(fileNameToLoad);
+
+            }
+        });
+        nfcSign.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Terminal terminal=new Terminal();
+                byte[] fileHash=FileManagerClass.hashFile(client.getN());
+                terminal.sendFileToSign(fileHash);
             }
         });
     }

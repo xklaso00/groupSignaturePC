@@ -11,13 +11,19 @@ public class UserZKObject implements Serializable {
     private BigInteger c2Goth;
     private  BigInteger eClientHash;
     private byte[] clientPubKey;
+    private BigInteger clientID;
 
-    public UserZKObject(BigInteger[] zets, BigInteger e2, BigInteger c2Goth, BigInteger eClientHash, byte[] clientPubKey) {
+    public UserZKObject(BigInteger[] zets, BigInteger e2, BigInteger c2Goth, BigInteger eClientHash, byte[] clientPubKey,BigInteger clientID) {
         Zets = zets;
         this.e2 = e2;
         this.c2Goth = c2Goth;
         this.eClientHash = eClientHash;
         this.clientPubKey = clientPubKey;
+        this.clientID=clientID;
+    }
+
+    public BigInteger getClientID() {
+        return clientID;
     }
 
     public BigInteger[] getZets() {
