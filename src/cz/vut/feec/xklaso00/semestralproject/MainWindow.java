@@ -2,6 +2,7 @@ package cz.vut.feec.xklaso00.semestralproject;
 
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;
+import com.herumi.mcl.G2;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,7 @@ public class MainWindow {
     private JPanel MainPanel;
     private JButton button1;
     private JButton signButton;
-    //private JTextField textField1;
+    private JTextField IDInput;
     private JButton verifyButton;
     private JLabel labelMulti;
     private JTextArea textArea1;
@@ -28,6 +29,9 @@ public class MainWindow {
     private JButton loadManagerButton;
     private JLabel managerLoadText;
     private JButton nfcSign;
+    private JButton checkSigOfPDFButton;
+    private JButton revokeUserButton;
+    private JTextField textField1;
     private boolean computed=false;
     JFrame frame= new JFrame("Group signature with multi-party computation");
     Server server;
@@ -57,12 +61,12 @@ public class MainWindow {
         frame.add(MainPanel);
         frame.pack();
 
-        frame.setSize(700,300);
+        frame.setSize(700,500);
         frame.setLocationRelativeTo(null);
 
         frame.setVisible(true);
         //server=new Server();
-        server=new Server("files/53763a7a_key.ser");
+        server=new Server("files/2e07597d_key.ser");
         client=new Client();
 
 
@@ -220,8 +224,39 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Terminal terminal=new Terminal();
-                byte[] fileHash=FileManagerClass.hashFile(client.getN());
+                byte[] fileHash=FileManagerClass.ChooseAndHashFile(client.getN());
                 terminal.sendFileToSign(fileHash);
+            }
+        });
+        checkSigOfPDFButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                byte[] hash=FileManagerClass.ChooseAndHashFile(WeakBB.genNinBigInt());
+                SignatureProof sp=FileManagerClass.loadSignature(FileManagerClass.getLastPathOfPDF());
+                if(sp!=null){
+                    BigInteger hashBig=new BigInteger(hash);
+                    Fr hashFr=new Fr(hashBig.toString(10));
+                    G2 groupPublicKey=FileManagerClass.loadPublicKeyForGroup(sp.groupID);
+                    boolean isLegit=Server.checkProof(sp,hashFr,groupPublicKey);
+                    if(isLegit){
+                        System.out.println("legit sig");
+                    }
+                    else{
+                        System.out.println("NOT LEGIT SIG");
+                    }
+                }
+                else {
+                    System.out.println("COULD not load signature");
+                }
+            }
+        });
+        revokeUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String textToRead=IDInput.getText();
+                BigInteger IDToRevoke=new BigInteger(textToRead,16);
+                System.out.println("ID TO REVOKE IS "+IDToRevoke.toString(16));
+                server.revokeUser(IDToRevoke);
             }
         });
     }

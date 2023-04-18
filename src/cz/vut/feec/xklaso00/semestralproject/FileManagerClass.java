@@ -9,9 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
 
 public class FileManagerClass {
-
+    private static String lastPathOfPDF=null;
 
     public static String saveManagerKey(FileOfManager FileOfManager){
         StringBuilder sb=new StringBuilder();
@@ -91,7 +93,16 @@ public class FileManagerClass {
         catch (Exception e){
             e.printStackTrace();
         }
-
+        String secondaryPath=chooseFile("Choose the group_public_key file manually");
+        try {
+            FileInputStream fileIn = new FileInputStream(secondaryPath);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            FileOfGroup obj=(FileOfGroup)in.readObject();
+            return obj.getGroupPublicKeyG2();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         return null;
@@ -109,26 +120,127 @@ public class FileManagerClass {
         else
             return null;
     }
-    public static byte[] hashFile(BigInteger nOfCurve){
-        String fileName=chooseFile("Choose a .pdf file to sign");
+    public static byte[] ChooseAndHashFile(BigInteger nOfCurve){
+        String fileName=chooseFile("Choose a .pdf file");
         Path filePath= Paths.get(fileName);
+        lastPathOfPDF=fileName;
+        System.out.println("filename "+fileName);
         try {
             byte[] pdf = Files.readAllBytes(filePath);
-            MessageDigest hashing;
-            hashing= MessageDigest.getInstance("SHA-256");
-            hashing.update(pdf);
-            byte[] hash=hashing.digest();
-            BigInteger hashBig=new BigInteger(hash);
-            hashBig=hashBig.mod(nOfCurve);
-            hash=hashBig.toByteArray();
-            return hash;
-
-
+            return hashFileBytes(pdf,nOfCurve);
 
         } catch (Exception e) {
             System.out.println("Error while reading and hashing the file");
             e.printStackTrace();
             return null;
         }
+    }
+    public static byte[] hashFileBytes(byte[] fileBytes,BigInteger nOfCurve){
+        MessageDigest hashing;
+        try {
+            hashing= MessageDigest.getInstance("SHA-256");
+            hashing.update(fileBytes);
+            byte[] hash=hashing.digest();
+            BigInteger hashBig=new BigInteger(hash);
+            hashBig=hashBig.mod(nOfCurve);
+            hash=hashBig.toByteArray();
+            return hash;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static void saveSignature(SignatureProof signatureProof){
+        String pathString=lastPathOfPDF;
+        System.out.println("Path is "+pathString);
+        pathString=pathString.split("\\.")[0];
+        System.out.println("Split is "+pathString);
+        StringBuilder sb=new StringBuilder();
+        sb.append(pathString);
+        sb.append("_signature.ser");
+        pathString=sb.toString();
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(pathString);
+            ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
+            out.writeObject(signatureProof);
+            out.close();
+            fileOutputStream.close();
+            System.out.println("Signature saved to file "+pathString);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static SignatureProof loadSignature(String pdfPath){
+        String newPath=pdfPath.split("\\.")[0];
+        StringBuilder sb=new StringBuilder();
+        sb.append(newPath);
+        sb.append("_signature.ser");
+        newPath=sb.toString();
+        try {
+            FileInputStream fis=new FileInputStream(newPath);
+            ObjectInputStream ois=new ObjectInputStream(fis);
+            SignatureProof signatureProof= (SignatureProof) ois.readObject();
+            return signatureProof;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  null;
+        }
+    }
+
+    public static int saveRevokedToFile(BigInteger groupID, HashSet<byte[]> revokedUsers){
+        StringBuilder sb=new StringBuilder();
+        sb.append("files/");
+        sb.append(groupID.toString(16));
+        sb.append("_revoked_users.ser");
+        String pathToSave=sb.toString();
+
+        try {
+            FileOutputStream fos=new FileOutputStream(pathToSave);
+            ObjectOutputStream oos=new ObjectOutputStream(fos);
+            oos.writeObject(revokedUsers);
+            oos.close();
+            fos.close();
+            System.out.println("REVOKED SAVED TO "+pathToSave );
+            return 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -2;
+        }
+    }
+    public static HashSet<byte[]> loadRevokedUsers(BigInteger groupID){
+        StringBuilder sb=new StringBuilder();
+        sb.append("files/");
+        sb.append(groupID.toString(16));
+        sb.append("_revoked_users.ser");
+        String pathToLoad=sb.toString();
+        try {
+            FileInputStream fis=new FileInputStream(pathToLoad);
+            ObjectInputStream ois=new ObjectInputStream(fis);
+            HashSet<byte[]> revokedUsers= (HashSet<byte[]>) ois.readObject();
+            System.out.println("REVOKED loaded  "+pathToLoad );
+            return revokedUsers;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //if I cannot find the file lets try it manually
+        String secPath=chooseFile("cannot find revocation list, give it to me manually");
+        try {
+            FileInputStream fis=new FileInputStream(secPath);
+            ObjectInputStream ois=new ObjectInputStream(fis);
+            HashSet<byte[]> revokedUsers= (HashSet<byte[]>) ois.readObject();
+            return revokedUsers;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    public static String getLastPathOfPDF() {
+        return lastPathOfPDF;
     }
 }

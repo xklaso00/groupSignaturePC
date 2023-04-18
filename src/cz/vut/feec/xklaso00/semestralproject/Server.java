@@ -11,6 +11,10 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Server {
     String TAG= "TimeStamps";
@@ -28,6 +32,7 @@ public class Server {
     private BigInteger managerID;
     private BigInteger eHash;
     private FileOfManager activeManagerFile;
+    private HashSet<byte[]> revokedUsers;
     //constructor for creating new manager
     public Server(){
         SecureRandom random=new SecureRandom();
@@ -37,7 +42,7 @@ public class Server {
         n=new BigInteger("2523648240000001BA344D8000000007FF9F800000000010A10000000000000D",16);
         serverPrivateECKey=serverPrivateECKey.mod(n);
         ManKey= new Fr(serverPrivateECKey.toString(),10);
-        BigInteger managerID=new BigInteger(32,random);
+        managerID=new BigInteger(32,random);
         FileOfManager manFile=new FileOfManager(serverPrivateECKey,managerID);
         String managerFileName=FileManagerClass.saveManagerKey(manFile);
         managerPublicKey=new G2();
@@ -45,6 +50,9 @@ public class Server {
         FileOfGroup fileOfGroup=new FileOfGroup(managerID,managerPublicKey);
         String fileName=FileManagerClass.saveGroupCertToFile(fileOfGroup);
         activeManagerFile=manFile;
+        revokedUsers=new HashSet<>();
+        FileManagerClass.saveRevokedToFile(managerID,revokedUsers);
+
 
     }
     //constructor with loading manager file
@@ -58,6 +66,9 @@ public class Server {
         managerPublicKey=new G2();
         Mcl.mul(managerPublicKey,WeakBB.getG2(),ManKey);
         activeManagerFile=manFile;
+        //load revokedUsers here
+        revokedUsers=FileManagerClass.loadRevokedUsers(managerID);
+
     }
 
     public PaillierKeyPair runSetUpOfPaillier(){
@@ -275,6 +286,19 @@ public class Server {
         //Log.i("ProofCheck","t2= "+t2.toString());
         //Log.i("ProofCheck"," are ts same? "+t.equals(t2));
 
+        HashSet<byte[]> revoked=FileManagerClass.loadRevokedUsers(sp.groupID);
+        Iterator<byte[]> iterator = revoked.iterator();
+        while(iterator.hasNext()){
+            byte[] invKey=iterator.next();
+            G2 invKeyG2=new G2();
+            invKeyG2.deserialize(invKey);
+            int revokeResult= checkSignatureWithPK(invKeyG2,sp.getSiAph(),sp.getSiDash());
+            if(revokeResult==0){
+                System.out.println("This user is revoked");
+                return false;
+            }
+        }
+
         if(sp.getE().equals(e2))
             return true;
         else
@@ -307,18 +331,48 @@ public class Server {
         }
         return null;
     }
-    public int openSignature(G2 PKiInv,G1 SiAph, G1 SiDash){
+    public static int checkSignatureWithPK(G2 PKiInv, G1 SiAph, G1 SiDash){
         GT pair1= new GT();
         GT pair2= new GT();
         Mcl.pairing(pair1,SiAph,PKiInv);
         Mcl.pairing(pair2,SiDash,WeakBB.getG2());
         if(pair1.equals(pair2)){
             System.out.println("it is the user");
+            return 0;
         }
 
-        return 0;
+        return -1;
     }
+    public BigInteger openSignature(SignatureProof signatureProof){
+        HashMap <BigInteger, byte[]> usersHashMap=activeManagerFile.getUserHashMap();
+        if(!signatureProof.groupID.equals(managerID))
+            return null;
+        for(Map.Entry<BigInteger, byte[]> set :
+                usersHashMap.entrySet()){
+            G2 PKiInv=new G2();
+            PKiInv.deserialize(set.getValue());
+            if(checkSignatureWithPK(PKiInv,signatureProof.getSiAph(),signatureProof.getSiDash())==0){
+                return set.getKey();
+            }
+        }
+        return null;
+    }
+    public int revokeUser(BigInteger userID){
+        HashMap<BigInteger, byte[]> allUsers=activeManagerFile.getUserHashMap();
+        if(allUsers.containsKey(userID)){
+            byte[] keyInvertedBytes=allUsers.get(userID);
+            revokedUsers.add(keyInvertedBytes);
+            //save the file
+            return FileManagerClass.saveRevokedToFile(getManagerID(),revokedUsers);
+        }
+        else{
+            return -1;
+        }
 
+
+
+
+    }
 
     public BigInteger getcGoth() {
         return cGoth;
@@ -343,5 +397,9 @@ public class Server {
 
     public BigInteger getManagerID() {
         return managerID;
+    }
+
+    public HashSet<byte[]> getRevokedUsers() {
+        return revokedUsers;
     }
 }

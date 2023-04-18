@@ -27,6 +27,7 @@ public class Main {
         client.computeModifiedSchnorrProof(msg);
         boolean legitProof= server.checkProof(client.getGtoR(),client.getSiAph(),client.getSiDash(),msg,client.getE(),client.getSr(),client.getSSki());
         System.out.println("legit sig? " +legitProof);*/
-        MainWindow mainWindow=new MainWindow();
+        //MainWindow mainWindow=new MainWindow();
+        new StartWindow();
     }
 }

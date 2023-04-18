@@ -16,7 +16,8 @@ import static java.lang.Thread.sleep;
 public class Terminal {
     private Card card = null;
     private CardChannel channel=null;
-    public boolean InitializeConnection(){
+    private BigInteger lastID;
+    public int InitializeConnection(){
 
 
         try {
@@ -26,30 +27,28 @@ public class Terminal {
             System.out.println("Terminals: " + terminals);
             CardTerminal terminal = terminals.get(0);
 
-            try {
-                while (!terminal.isCardPresent()) ;
+            while (!terminal.isCardPresent()) ;
                 // Connect wit the card, using supported protocol, for some reason T=0 not working
-                card = terminal.connect("*");
-                System.out.println("Card: " + card);
-                channel = card.getBasicChannel();
-            } catch (CardException ce) {
-                ce.printStackTrace();
-            }
+            card = terminal.connect("*");
+            System.out.println("Card: " + card);
+            channel = card.getBasicChannel();
 
             ResponseAPDU response1 = channel.transmit(new CommandAPDU(Instructions.getAID()));
             byte[] byteResponse1 = null;
             byteResponse1 = response1.getBytes();
             System.out.println("Card response for choose AID command: " + Instructions.bytesToHex(byteResponse1));
-            if(byteResponse1.length==2)
-                return true;
+            if(Instructions.isEqual(byteResponse1,Instructions.getaOkay()))
+                return 0;
+            else
+                return -2;
         } catch (CardException e) {
             e.printStackTrace();
         }
 
 
-        return false;
+        return -1;
     }
-    public void sendPublicParameters(ServerTwoPartyObject obj){
+    public boolean sendPublicParameters(ServerTwoPartyObject obj){
         byte[] com=Instructions.makeSetupCommand(obj);
         InitializeConnection();
         try {
@@ -59,9 +58,13 @@ public class Terminal {
             byteResponse=responseAPDU.getBytes();
             System.out.println("I got back:" +Instructions.bytesToHex(byteResponse));
             card.disconnect(true);
+            if(Instructions.isEqual(Instructions.getaOkay(),byteResponse)){
+                return true;
+            }
         } catch (CardException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return false;
     }
     public int userZKRequest(Server server){
         InitializeConnection();
@@ -106,6 +109,7 @@ public class Terminal {
                 byteResponse=responseAPDU.getBytes();
                 card.disconnect(true);
                 System.out.println("DONE ON MY PART ");
+                lastID=userZK.getClientID();
 
 
             }catch (Exception e){
@@ -119,9 +123,19 @@ public class Terminal {
         }
         return 0;
     }
+
+    public BigInteger getLastID() {
+        if(!lastID.equals(null))
+            return lastID;
+        else
+            return BigInteger.ZERO;
+    }
+
     //pass the hash of the file modded with n
     public int sendFileToSign(byte[] fileHash){
-        InitializeConnection();
+        int connectionInitialized=InitializeConnection();
+        if(connectionInitialized!=0)
+            return connectionInitialized;
         byte[] fileCom=Instructions.makeSignFileCommand(fileHash);
         try {
             boolean isItYet=false;
@@ -145,7 +159,7 @@ public class Terminal {
 
             if(!(Instructions.isEqual(checkBytes,Instructions.getaOkay()))){
                 System.out.println("Probably did nto get all bytes");
-                return -2;
+                return -6;
             }
             ByteArrayInputStream bis = new ByteArrayInputStream(SignObject);
             ObjectInputStream ois=new ObjectInputStream(bis);
@@ -161,6 +175,7 @@ public class Terminal {
 
             if(LegitSignature){
                 System.out.println("SIG LEGIT");
+                FileManagerClass.saveSignature(signatureProof);
                 //add saving to file the signature
                 return 0;
             }
@@ -174,6 +189,7 @@ public class Terminal {
             e.printStackTrace();
             return -3;
         }
+
 
     }
 }
