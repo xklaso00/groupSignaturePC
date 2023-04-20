@@ -36,6 +36,13 @@ public class Instructions {
             (byte)0x00,
             (byte)0x00,
     };
+    private static byte [] FAILEDZK = new byte[]{(byte)0x80, //with this command we want the user to give us his zk and e2
+            (byte)0x66,
+            (byte)0x00,
+            (byte)0x00,
+            (byte)0x00,
+            (byte)0x00,
+            (byte)0x00};
     private static byte[] A_OKAY ={ (byte)0x90,
             (byte)0x00};
     private static byte[] NOT_YET ={ (byte)0xFF,
@@ -53,6 +60,15 @@ public class Instructions {
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
         return new String(hexChars);
+    }
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
     }
     public static boolean isEqual(byte[] a, byte[] b) {
         if (a.length != b.length) {
@@ -81,8 +97,8 @@ public class Instructions {
             byte[] byteLen=bigInt.toByteArray();
             outputStream.write(byteLen);
 
-            System.out.println("byteValOfObject is"+Instructions.bytesToHex(byteVal));
-            System.out.println("pk len is"+lenOfData);
+            //System.out.println("byteValOfObject is"+Instructions.bytesToHex(byteVal));
+            //System.out.println("pk len is"+lenOfData);
             outputStream.write(byteVal);
             outputStream.write((byte)0x20);
             outputStream.write((byte)0x20);
@@ -148,5 +164,9 @@ public class Instructions {
 
     public static byte[] getNotYet() {
         return NOT_YET;
+    }
+
+    public static byte[] getFAILEDZK() {
+        return FAILEDZK;
     }
 }

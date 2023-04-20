@@ -37,6 +37,7 @@ public class ManagerWindow {
             panel1.setOpaque(false);
             panel2.setOpaque(false);
 
+
         }catch (Exception e){
             System.out.println("Error in loading the background");
             frame.add(MainPanel);
@@ -53,6 +54,8 @@ public class ManagerWindow {
         managerIDLabel.setText(managerIDLabel.getText()+modelViewHandle.getServer().getManagerID().toString(16));
         modelViewHandle.fillTextAreaWithUsers(textArea1);
         textArea1.setEditable(false);
+
+
 
         backToMenuButton.addActionListener(new ActionListener() {
             @Override

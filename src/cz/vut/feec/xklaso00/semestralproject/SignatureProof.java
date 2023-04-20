@@ -9,18 +9,16 @@ import java.math.BigInteger;
 
 public class SignatureProof implements Serializable {
 
-    /*public G1 gToR;
-    public G1 SiAph;
-    public G1 SiDash;*/
+
     private byte[]gToRBytes;
     private byte[]SiAphBytes;
     private byte[]SiDashBytes;
 
-    //public Fr E;
+
     private byte [] eBytes;
-    //public Fr Sr;
+
     private byte [] SrBytes;
-    //public Fr SSki;
+
     private byte [] SSKiBytes;
     public BigInteger groupID;
 

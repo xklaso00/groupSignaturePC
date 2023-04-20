@@ -16,18 +16,8 @@ public class PaillierKeyPair {
     public PaillierKeyPair(int bitSize){
         Random rng= new SecureRandom();
         long st= System.nanoTime();
-        /*p=BigInteger.probablePrime(bitSize/2,rng);
-        q=BigInteger.probablePrime(bitSize/2,rng);*/
-        /*p= new BigInteger(bitSize/2,rng);
-        q= new BigInteger(bitSize/2,rng);
-        String pString=prime(p.toString(10));
-        String qString= prime(q.toString(10));
-        p=new BigInteger(pString,10);
-        q= new BigInteger(qString,10);*/
         p= PaillierFunctions.generateRandomPrime(bitSize/2);
         q=PaillierFunctions.generateRandomPrime(bitSize/2);
-
-
         long et= System.nanoTime();
 
         BigInteger n= p.multiply(q);
@@ -59,8 +49,21 @@ public class PaillierKeyPair {
         //paillierPublicKey= new cz.vut.feec.xklaso00.semestralproject.PaillierPublicKey(n,g,nn,bitSize);
         paillierPublicKey= new PaillierPublicKey(n,g,nn,bitSize,nGoth,hGoth,gGoth);
         //paillierPrivateKey= new cz.vut.feec.xklaso00.semestralproject.PaillierPrivateKey(lambda,Mu,n,nn,phi);
-        paillierPrivateKey= new PaillierPrivateKey(lambda,Mu,n,nn,phi,phiNGoth);
+        //paillierPrivateKey= new PaillierPrivateKey(lambda,Mu,n,nn,phi,phiNGoth);
+        paillierPrivateKey= new PaillierPrivateKey(lambda,Mu,n,nn,phi);
+    }
+    public PaillierKeyPair(int bitSize,GothGroup gothGroup){
+        p= PaillierFunctions.generateRandomPrime(bitSize/2);
+        q=PaillierFunctions.generateRandomPrime(bitSize/2);
+        BigInteger n= p.multiply(q);
+        BigInteger nn= n.pow(2);
+        //System.out.println("nn len is "+nn.bitLength());
+        BigInteger lambda= this.lcm(p.subtract(BigInteger.ONE),q.subtract(BigInteger.ONE));
 
+        BigInteger phi = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
+        BigInteger g =generateG(bitSize,n,phi,nn);
+        paillierPublicKey= new PaillierPublicKey(n,g,nn,bitSize,gothGroup.getnGoth(),gothGroup.gethGoth(),gothGroup.getgGoth());
+        paillierPrivateKey= new PaillierPrivateKey(lambda,Mu,n,nn,phi);
     }
     private BigInteger lcm(BigInteger a, BigInteger b){
         if (a.signum() == 0 || b.signum() == 0)

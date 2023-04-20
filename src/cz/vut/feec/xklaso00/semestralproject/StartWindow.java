@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.math.BigInteger;
 
 public class StartWindow {
 
@@ -20,6 +20,8 @@ public class StartWindow {
     private JLabel signLabel;
     private JLabel verLabel;
     private JLabel gmLabel;
+    private JButton button1;
+
 
     private  ModelViewHandle modelViewHandle;
 
@@ -89,6 +91,15 @@ public class StartWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 modelViewHandle.checkSignature(verLabel);
+            }
+        });
+
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String reeeee=FileManagerClass.chooseFile("e");
+                System.out.println(reeeee);
+                byte [] pdf=PDFManager.getContentBytesOfPDF(reeeee);
             }
         });
     }

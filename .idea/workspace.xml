@@ -6,22 +6,24 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="Added NFC for Signature&#10;Added fileManaging for group and manager on PC&#10;TODO: add saving of the sig and loading">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/GroupSig_jar2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ModelViewHandle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.java" afterDir="false" />
+    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="better gui&#10;commit before removing ngoth generation and phiNGoth usage">
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/GothGroup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PDFManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/libs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/libs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/53763a7a_group_public_key.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/53763a7a_key.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileManagerClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileManagerClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Instructions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Instructions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ModelViewHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ModelViewHandle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierKeyPair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierKeyPair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierPrivateKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierPrivateKey.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/SignatureProof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/SignatureProof.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Terminal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,8 +55,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/kita2/IdeaProjects/GroupSig",
-    "project.structure.last.edited": "Project",
+    "last_opened_file_path": "C:/Users/kita2/IdeaProjects/GroupSig/libs/itextpdf-5.4.0.jar",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
@@ -110,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681206076636</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="better gui&#10;commit before removing ngoth generation and phiNGoth usage">
+      <created>1681812046624</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681812046624</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -127,6 +136,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added terminal APDU commands for the 2party, Started working on files for manager" />
     <MESSAGE value="Added NFC for Signature&#10;Added fileManaging for group and manager on PC&#10;TODO: add saving of the sig and loading" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added NFC for Signature&#10;Added fileManaging for group and manager on PC&#10;TODO: add saving of the sig and loading" />
+    <MESSAGE value="better gui&#10;commit before removing ngoth generation and phiNGoth usage" />
+    <option name="LAST_COMMIT_MESSAGE" value="better gui&#10;commit before removing ngoth generation and phiNGoth usage" />
   </component>
 </project>

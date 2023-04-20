@@ -75,7 +75,7 @@ public class Terminal {
             byte[] byteResponse=null;
             byteResponse=responseAPDU.getBytes();
 
-            System.out.println("I got back:" +Instructions.bytesToHex(byteResponse));
+            //System.out.println("I got back:" +Instructions.bytesToHex(byteResponse));
 
             if(Instructions.isEqual(Instructions.getNotYet(),byteResponse)){
                 return -1;
@@ -95,18 +95,25 @@ public class Terminal {
                 UserZKObject userZK=(UserZKObject) ois.readObject();
                 boolean secondProof=server.checkPKUser(userZK.getZets(),userZK.getE2(),userZK.getC2Goth(),userZK.geteClientHash(),userZK.getClientPubKey());
                 System.out.println("is client NIZKPK legit "+secondProof);
-                if(!secondProof)
+                if(!secondProof) {
+                    ResponseAPDU responseAPDU1=channel.transmit(new CommandAPDU(Instructions.getFAILEDZK()));
                     return -5;
+                }
                 //here we add the user to database of pkInvs for open Func
                 server.saveUserKeyToFile(userZK.getClientPubKey(),userZK.getClientID());
                 //we write out for test
-                server.getActiveManagerFile().writeOutUsersSaved();
+                //server.getActiveManagerFile().writeOutUsersSaved();
 
                 G1 e2=server.computePubManager(userZK.getE2());
                 byte[] e2COM= Instructions.createE2COM(e2);
                 System.out.println("Sending e2 ");
+                //modded for watch remove for phone
+                //InitializeConnection();
+
+
                 ResponseAPDU responseAPDU1=channel.transmit(new CommandAPDU(e2COM));
-                byteResponse=responseAPDU.getBytes();
+                byteResponse=responseAPDU1.getBytes();
+                System.out.println("Response for e2 is "+Instructions.bytesToHex(byteResponse));
                 card.disconnect(true);
                 System.out.println("DONE ON MY PART ");
                 lastID=userZK.getClientID();

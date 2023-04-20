@@ -72,7 +72,8 @@ public class Server {
     }
 
     public PaillierKeyPair runSetUpOfPaillier(){
-        kp= new PaillierKeyPair(4561);
+        GothGroup gothGroup=FileManagerClass.loadGothParameters();
+        kp= new PaillierKeyPair(4561,gothGroup);
         return kp;
     }
 
@@ -83,8 +84,8 @@ public class Server {
         return e1;
     }
     public BigInteger computeCGoth(){
-
-        rDash=PaillierFunctions.getRandom(kp.getPaillierPrivateKey().getPhiNGoth().bitLength(),kp.getPaillierPrivateKey().getPhiNGoth());
+        //I modified this to be NGoth not PhiNGoth
+        rDash=PaillierFunctions.getRandom(kp.getPaillierPublicKey().getNGoth().bitLength(),kp.getPaillierPublicKey().getNGoth());
         cGoth=kp.getPaillierPublicKey().getGGoth().modPow(serverPrivateECKey,kp.getPaillierPublicKey().getNGoth());
         BigInteger mid= kp.getPaillierPublicKey().getHGoth().modPow(rDash,kp.getPaillierPublicKey().getNGoth());
         cGoth=cGoth.multiply(mid);
@@ -337,7 +338,7 @@ public class Server {
         Mcl.pairing(pair1,SiAph,PKiInv);
         Mcl.pairing(pair2,SiDash,WeakBB.getG2());
         if(pair1.equals(pair2)){
-            System.out.println("it is the user");
+            //System.out.println("it is the user");
             return 0;
         }
 

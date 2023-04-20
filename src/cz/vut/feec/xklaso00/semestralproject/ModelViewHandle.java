@@ -67,7 +67,11 @@ public class ModelViewHandle {
                         fillTextAreaWithUsers(textArea);
                     }
                     else {
-                        addUserLabel.setText("Something Went Wrong");
+                        if(ret==-5){
+                            addUserLabel.setText("Could not verify userZK");
+                        }
+                        else
+                            addUserLabel.setText("Something Went Wrong");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

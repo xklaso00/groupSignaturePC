@@ -10,7 +10,7 @@ public class PaillierPrivateKey {
     private BigInteger n;
     private BigInteger nn;
     private BigInteger phi;
-    private BigInteger phiNGoth;
+    //private BigInteger phiNGoth;
     public PaillierPrivateKey(BigInteger lambda, BigInteger Mu,BigInteger n,BigInteger nn, BigInteger phi){
         this.lambda=lambda;
         this.Mu=Mu;
@@ -18,14 +18,14 @@ public class PaillierPrivateKey {
         this.nn=nn;
         this.phi=phi;
     }
-    public PaillierPrivateKey(BigInteger lambda, BigInteger Mu,BigInteger n,BigInteger nn, BigInteger phi, BigInteger phiNGoth){
+   /* public PaillierPrivateKey(BigInteger lambda, BigInteger Mu,BigInteger n,BigInteger nn, BigInteger phi, BigInteger phiNGoth){
         this.lambda=lambda;
         this.Mu=Mu;
         this.n=n;
         this.nn=nn;
         this.phi=phi;
         this.phiNGoth=phiNGoth;
-    }
+    }*/
 
 
     public BigInteger getLambda() {
@@ -48,7 +48,5 @@ public class PaillierPrivateKey {
         return phi;
     }
 
-    public BigInteger getPhiNGoth() {
-        return phiNGoth;
-    }
+
 }

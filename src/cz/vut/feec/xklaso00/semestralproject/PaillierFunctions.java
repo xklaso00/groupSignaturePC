@@ -102,6 +102,10 @@ public class PaillierFunctions {
 
     public static BigInteger hashCsClient(BigInteger c1, BigInteger c2,BigInteger c3, byte[] c4){
         try {
+            System.out.println("c1 "+Instructions.bytesToHex(c1.toByteArray()));
+            System.out.println("c2 "+Instructions.bytesToHex(c2.toByteArray()));
+            System.out.println("c3 "+Instructions.bytesToHex(c3.toByteArray()));
+            System.out.println("c4 "+Instructions.bytesToHex(c4));
             MessageDigest hashing = MessageDigest.getInstance("SHA-256");
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
             outputStream.write(c1.toByteArray());

@@ -1,6 +1,9 @@
 package cz.vut.feec.xklaso00.semestralproject;
 
 import com.herumi.mcl.G2;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 import javax.swing.*;
 import java.io.*;
@@ -11,6 +14,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
+
 
 public class FileManagerClass {
     private static String lastPathOfPDF=null;
@@ -115,18 +119,22 @@ public class FileManagerClass {
         int res=fileChooser.showOpenDialog(null);
         if(res==JFileChooser.APPROVE_OPTION){
             file=fileChooser.getSelectedFile();
-            return file.getAbsolutePath();
+            String path=file.getAbsolutePath();
+            file=null;
+            fileChooser=null;
+            return path;
         }
         else
             return null;
     }
     public static byte[] ChooseAndHashFile(BigInteger nOfCurve){
         String fileName=chooseFile("Choose a .pdf file");
-        Path filePath= Paths.get(fileName);
+        //Path filePath= Paths.get(fileName);
         lastPathOfPDF=fileName;
-        System.out.println("filename "+fileName);
+        //System.out.println("filename "+fileName);
         try {
-            byte[] pdf = Files.readAllBytes(filePath);
+            //byte[] pdf = Files.readAllBytes(filePath);
+            byte [] pdf=PDFManager.getContentBytesOfPDF(fileName);
             return hashFileBytes(pdf,nOfCurve);
 
         } catch (Exception e) {
@@ -135,6 +143,8 @@ public class FileManagerClass {
             return null;
         }
     }
+
+
     public static byte[] hashFileBytes(byte[] fileBytes,BigInteger nOfCurve){
         MessageDigest hashing;
         try {
@@ -151,10 +161,10 @@ public class FileManagerClass {
         }
     }
     public static void saveSignature(SignatureProof signatureProof){
-        String pathString=lastPathOfPDF;
-        System.out.println("Path is "+pathString);
+        /*String pathString=lastPathOfPDF;
+        //System.out.println("Path is "+pathString);
         pathString=pathString.split("\\.")[0];
-        System.out.println("Split is "+pathString);
+        //System.out.println("Split is "+pathString);
         StringBuilder sb=new StringBuilder();
         sb.append(pathString);
         sb.append("_signature.ser");
@@ -169,10 +179,28 @@ public class FileManagerClass {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }*/
+        byte[] sigProofBytes;
+
+        try {
+            ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(outputStream);
+            out.writeObject(signatureProof);
+            out.flush();
+            sigProofBytes=outputStream.toByteArray();
+            outputStream.close();
+            out.close();
+
+            String newFile=PDFManager.saveSignatureToMetadata(lastPathOfPDF,sigProofBytes);
+            System.out.println("SIG SAVED to "+newFile);
+            //System.out.println("sp "+signatureProof.groupID);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
     public static SignatureProof loadSignature(String pdfPath){
-        String newPath=pdfPath.split("\\.")[0];
+        /*String newPath=pdfPath.split("\\.")[0];
         StringBuilder sb=new StringBuilder();
         sb.append(newPath);
         sb.append("_signature.ser");
@@ -187,7 +215,19 @@ public class FileManagerClass {
         } catch (Exception e) {
             e.printStackTrace();
             return  null;
+        }*/
+        byte[] sigBytes=PDFManager.readSigFromMetadata(pdfPath);
+        ByteArrayInputStream inputStream=new ByteArrayInputStream(sigBytes);
+        try {
+            ObjectInputStream objectInputStream=new ObjectInputStream(inputStream);
+            SignatureProof signatureProof= (SignatureProof) objectInputStream.readObject();
+            //System.out.println("sp "+signatureProof.groupID);
+
+            return signatureProof;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     public static int saveRevokedToFile(BigInteger groupID, HashSet<byte[]> revokedUsers){
@@ -240,6 +280,39 @@ public class FileManagerClass {
 
         return null;
     }
+    
+    public static int generateAndSaveGothToFile(int bitsize){
+        GothGroup gothGroup=new GothGroup(bitsize);
+        String fileName="files/gothicParameters/gothGroup.ser";
+        try {
+            FileOutputStream fos=new FileOutputStream(fileName);
+            ObjectOutputStream oos=new ObjectOutputStream(fos);
+            oos.writeObject(gothGroup);
+            oos.close();
+            fos.close();
+            System.out.println("GOTH SAVED TO "+fileName );
+            return 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static GothGroup loadGothParameters(){
+        String fileName="files/gothicParameters/gothGroup.ser";
+        try {
+            FileInputStream fis=new FileInputStream(fileName);
+            ObjectInputStream ois=new ObjectInputStream(fis);
+            GothGroup gothGroup= (GothGroup) ois.readObject();
+            System.out.println("goth loaded  "+fileName );
+            return gothGroup;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String getLastPathOfPDF() {
         return lastPathOfPDF;
     }
