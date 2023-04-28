@@ -257,7 +257,9 @@ public class Server {
         GT pair1 =new GT();
         G1 SiG=new G1();
         Mcl.add(SiG,sp.getSiDash(),sp.getGToR());
+
         Mcl.pairing(pair1,SiG,WeakBB.getG2());
+
         //G2 PK = new G2();
         //Mcl.mul(PK,WeakBB.getG2(),ManKey);
         GT pair2 = new GT();

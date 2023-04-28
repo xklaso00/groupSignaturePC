@@ -159,6 +159,10 @@ public class ModelViewHandle {
     public void signDocument(JLabel label){
         Terminal terminal=new Terminal();
         byte[] fileHash=FileManagerClass.ChooseAndHashFile(WeakBB.genNinBigInt());
+        if(fileHash==null) {
+            label.setText("Error in choosing the file");
+            return;
+        }
         label.setText("Put phone on NFC reader to sign the document.");
 
         SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {

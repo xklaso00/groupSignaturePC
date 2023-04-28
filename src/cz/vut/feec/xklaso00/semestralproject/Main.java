@@ -3,6 +3,8 @@ package cz.vut.feec.xklaso00.semestralproject;
 import com.herumi.mcl.Mcl;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Random;
 
 public class Main {
 
@@ -36,6 +38,21 @@ public class Main {
         System.out.println("LEN OF MOBILE "+mobile.bitLength());
         System.out.println("LEN of pc"+re.bitLength());
         System.out.println("DIFFERENCE IS " +re.subtract(mobile));*/
+        /*long st=System.nanoTime();
+        BigInteger p=BigInteger.probablePrime(1024,new SecureRandom());
+        long et=System.nanoTime();
+        System.out.println("It took "+(et-st)/1000000+" ms");
+        BigInteger q=BigInteger.probablePrime(1024,new SecureRandom());
+        BigInteger n=p.multiply(q);
+        BigInteger g=new BigInteger(2048,new Random());
+        BigInteger a=new BigInteger(2048,new Random());
+        g=g.mod(n);
+        a=a.mod(n);
+        st=System.nanoTime();
+        g=g.modPow(a,n);
+        et=System.nanoTime();
+        System.out.println("It took "+(et-st)/1000+" ms");
+*/
 
         new StartWindow();
     }

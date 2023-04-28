@@ -17,17 +17,14 @@ public class StartWindow {
     private JLabel managerLabel;
     private JPanel Panel1;
     private JPanel Panel2;
-    private JLabel signLabel;
-    private JLabel verLabel;
-    private JLabel gmLabel;
-    private JButton button1;
+
 
 
     private  ModelViewHandle modelViewHandle;
 
     public StartWindow(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        try {
+        /*try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
@@ -37,17 +34,35 @@ public class StartWindow {
         }
         catch (Exception e){
             System.out.println("Error loading UIManager");
-        }
+        }*/
         try {
             frame.setLayout(new BorderLayout());
             JLabel background=new JLabel(new ImageIcon("background.png"));
             frame.add(background);
-            //background.setSize(700,500);
+
             background.setLayout(new GridLayout());
             background.add(MainPanel);
             MainPanel.setOpaque(false);
             Panel1.setOpaque(false);
             Panel2.setOpaque(false);
+            ImageIcon icon= new ImageIcon("files/icons/clientAppButton.png");
+            clientButton.setIcon(icon);
+            ImageIcon iconVer=new ImageIcon("files/icons/verifyAppButton.png");
+            verifierButton.setIcon(iconVer);
+            ImageIcon iconMan=new ImageIcon("files/icons/managerButton.png");
+            managerButton.setIcon(iconMan);
+            ImageIcon iconGen=new ImageIcon("files/icons/generateButton.png");
+            createManagerButton.setIcon(iconGen);
+
+
+            if(icon!=null)
+                clientButton.setText("");
+            if(iconVer!=null)
+                verifierButton.setText("");
+            if(iconMan!=null)
+                managerButton.setText("");
+            if(iconGen!=null)
+                createManagerButton.setText("");
 
         }catch (Exception e){
             System.out.println("Error in loading the background");
@@ -60,7 +75,7 @@ public class StartWindow {
         //frame.add(Panel2);
         frame.pack();
 
-        frame.setSize(700,500);
+        frame.setSize(800,500);
         frame.setLocationRelativeTo(null);
 
         frame.setVisible(true);
@@ -84,24 +99,22 @@ public class StartWindow {
         clientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                modelViewHandle.signDocument(signLabel);
+
+                //modelViewHandle.signDocument(signLabel);
+                new UserWindow();
+                frame.dispose();
             }
         });
         verifierButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                modelViewHandle.checkSignature(verLabel);
+                //modelViewHandle.checkSignature(verLabel);
+                new VerifierWindow();
+                frame.dispose();
             }
         });
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String reeeee=FileManagerClass.chooseFile("e");
-                System.out.println(reeeee);
-                byte [] pdf=PDFManager.getContentBytesOfPDF(reeeee);
-            }
-        });
+
     }
 
 }

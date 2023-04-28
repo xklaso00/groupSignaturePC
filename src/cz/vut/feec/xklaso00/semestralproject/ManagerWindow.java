@@ -21,6 +21,7 @@ public class ManagerWindow {
     private JLabel revokeLabel;
     private JLabel openLabel;
     private JTextArea textArea1;
+    private JPanel panel3;
     JFrame frame= new JFrame("Manager Window");
     ModelViewHandle modelViewHandle;
     public ManagerWindow(Server server){
@@ -36,6 +37,25 @@ public class ManagerWindow {
             MainPanel.setOpaque(false);
             panel1.setOpaque(false);
             panel2.setOpaque(false);
+            panel3.setOpaque(false);
+            ImageIcon iconBack=new ImageIcon("files/icons/buttonBackground.png");
+            backToMenuButton.setIcon(iconBack);
+            ImageIcon iconAdd=new ImageIcon("files/icons/addUserBackground.png");
+            addUserButton.setIcon(iconAdd);
+            ImageIcon iconRev=new ImageIcon("files/icons/revokeButton.png");
+            revokeUserButton.setIcon(iconRev);
+            ImageIcon iconOpen=new ImageIcon("files/icons/openButton.png");
+            openSignatureButton.setIcon(iconOpen);
+
+            if(iconAdd!=null)
+                addUserButton.setText("");
+
+            if(iconRev!=null)
+                revokeUserButton.setText("");
+            if(iconBack!=null)
+                backToMenuButton.setText("");
+            if(iconOpen!=null)
+                openSignatureButton.setText("");
 
 
         }catch (Exception e){
@@ -46,7 +66,7 @@ public class ManagerWindow {
         //frame.add(MainPanel);
         frame.pack();
 
-        frame.setSize(650,400);
+        frame.setSize(750,400);
         frame.setLocationRelativeTo(null);
 
         frame.setVisible(true);
@@ -54,6 +74,7 @@ public class ManagerWindow {
         managerIDLabel.setText(managerIDLabel.getText()+modelViewHandle.getServer().getManagerID().toString(16));
         modelViewHandle.fillTextAreaWithUsers(textArea1);
         textArea1.setEditable(false);
+
 
 
 

@@ -6,25 +6,20 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="better gui&#10;commit before removing ngoth generation and phiNGoth usage">
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/GothGroup.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PDFManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/libs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/libs.xml" afterDir="false" />
+    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar.">
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserWindow.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/VerifierWindow.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/VerifierWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileManagerClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileManagerClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Instructions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Instructions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/background.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ModelViewHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ModelViewHandle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierFunctions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierKeyPair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierKeyPair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierPrivateKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierPrivateKey.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/SignatureProof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/SignatureProof.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Terminal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,17 +45,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/kita2/IdeaProjects/GroupSig/libs/itextpdf-5.4.0.jar",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kita2/IdeaProjects/GroupSig/libs/itextpdf-5.4.0.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig" />
@@ -119,7 +114,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681812046624</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar.">
+      <created>1681979734703</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681979734703</updated>
+    </task>
+    <task id="LOCAL-00006" summary="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar.">
+      <created>1681979759918</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681979759918</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,6 +146,7 @@
     <MESSAGE value="Added terminal APDU commands for the 2party, Started working on files for manager" />
     <MESSAGE value="Added NFC for Signature&#10;Added fileManaging for group and manager on PC&#10;TODO: add saving of the sig and loading" />
     <MESSAGE value="better gui&#10;commit before removing ngoth generation and phiNGoth usage" />
-    <option name="LAST_COMMIT_MESSAGE" value="better gui&#10;commit before removing ngoth generation and phiNGoth usage" />
+    <MESSAGE value="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar." />
+    <option name="LAST_COMMIT_MESSAGE" value="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar." />
   </component>
 </project>
