@@ -6,20 +6,42 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar.">
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserWindow.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/VerifierWindow.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/VerifierWindow.java" afterDir="false" />
+    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="a commit before splitting in more packages etc">
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/GroupSignatureFunctions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/NIZKPKFunctions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/old/OldFunctions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ModelViewHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ModelViewHandle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/gothicParameters/gothGroup.ser" beforeDir="false" afterPath="$PROJECT_DIR$/files/gothicParameters/gothGroup.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileManagerClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/fileManaging/FileManagerClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileOfGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/fileManaging/FileOfGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/FileOfManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/fileManaging/FileOfManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/GothGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/GothGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Instructions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Instructions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/old/MainWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/old/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/ManagerWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/ManagerWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ModelViewHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/ModelViewHandle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PDFManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/fileManaging/PDFManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierFunctions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierKeyPair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/PaillierKeyPair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierPrivateKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/PaillierPrivateKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/PaillierPublicKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/PaillierPublicKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/ServerTwoPartyObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/ServerTwoPartyObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/SignatureProof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/SignatureProof.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/StartWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/StartWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/StartWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/UserWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/UserWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/UserZKObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/UserZKObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/VerifierWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/VerifierWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/VerifierWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/VerifierWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/semestralproject/WeakBB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/WeakBB.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,17 +67,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kita2/IdeaProjects/GroupSig/libs/itextpdf-5.4.0.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/kita2/IdeaProjects/GroupSig/src/cz/vut/feec/xklaso00/semestralproject/gui",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig" />
@@ -65,12 +87,19 @@
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig\libs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kita2\IdeaProjects\GroupSig\src\cz\vut\feec\xklaso00\semestralproject\old" />
+      <recent name="C:\Users\kita2\IdeaProjects\GroupSig\src\cz\vut\feec\xklaso00\semestralproject\gui" />
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig\src\cz\vut\feec\xklaso00\semestralproject" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cz.vut.feec.xklaso00.groupsignature.cryptocore" />
+      <recent name="cz.vut.feec.xklaso00.groupsignature.fileManaging" />
+      <recent name="cz.vut.feec.xklaso00.semestralproject.cryptocore" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cz.vut.feec.xklaso00.semestralproject.Main" />
+      <option name="MAIN_CLASS_NAME" value="cz.vut.feec.xklaso00.groupsignature.Main" />
       <module name="GroupSig" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -128,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681979759918</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="a commit before splitting in more packages etc">
+      <created>1682677748655</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1682677748655</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -147,6 +183,7 @@
     <MESSAGE value="Added NFC for Signature&#10;Added fileManaging for group and manager on PC&#10;TODO: add saving of the sig and loading" />
     <MESSAGE value="better gui&#10;commit before removing ngoth generation and phiNGoth usage" />
     <MESSAGE value="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar." />
-    <option name="LAST_COMMIT_MESSAGE" value="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar." />
+    <MESSAGE value="a commit before splitting in more packages etc" />
+    <option name="LAST_COMMIT_MESSAGE" value="a commit before splitting in more packages etc" />
   </component>
 </project>
