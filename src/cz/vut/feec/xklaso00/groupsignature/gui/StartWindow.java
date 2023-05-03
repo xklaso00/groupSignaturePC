@@ -1,6 +1,7 @@
 package cz.vut.feec.xklaso00.groupsignature.gui;
 
 import cz.vut.feec.xklaso00.groupsignature.ModelViewHandle;
+import cz.vut.feec.xklaso00.groupsignature.Server;
 import cz.vut.feec.xklaso00.groupsignature.fileManaging.FileManagerClass;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class StartWindow {
 
-    JFrame frame= new JFrame("Group signature with multi-party computation");
+    JFrame frame= new JFrame("Group signature with two-party computation");
     private JPanel MainPanel;
     private JButton managerButton;
     private JButton clientButton;
@@ -86,17 +87,21 @@ public class StartWindow {
         createManagerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                modelViewHandle.createServer();
+                Server server=modelViewHandle.createServer();
+                new RegisterWindow(server.getActiveManagerFile());
+
                 managerLabel.setText("New manager with ID: "+modelViewHandle.getServer().getManagerID().toString(16)+" was created");
             }
         });
         managerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String retString=modelViewHandle.createManagerWindow();
+                /*String retString=modelViewHandle.createManagerWindow();
                 if(!retString.equals(null)){
                     frame.dispose();
-                }
+                }*/
+                String path=FileManagerClass.chooseFile("Choose file");
+                new LoginWindow(path,frame);
             }
         });
         clientButton.addActionListener(new ActionListener() {

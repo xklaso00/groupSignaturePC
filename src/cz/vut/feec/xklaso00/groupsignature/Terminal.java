@@ -103,7 +103,7 @@ public class Terminal {
                     return -5;
                 }
                 //here we add the user to database of pkInvs for open Func
-                server.saveUserKeyToFile(userZK.getClientPubKey(),userZK.getClientID());
+
                 //we write out for test
                 //server.getActiveManagerFile().writeOutUsersSaved();
 
@@ -118,6 +118,7 @@ public class Terminal {
                 byteResponse=responseAPDU1.getBytes();
                 System.out.println("Response for e2 is "+Instructions.bytesToHex(byteResponse));
                 card.disconnect(true);
+                server.saveUserKeyToFile(userZK.getClientPubKey(),userZK.getClientID());
                 System.out.println("DONE ON MY PART ");
                 lastID=userZK.getClientID();
 

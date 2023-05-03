@@ -7,20 +7,21 @@ import cz.vut.feec.xklaso00.groupsignature.cryptocore.NIZKPKFunctions;
 import cz.vut.feec.xklaso00.groupsignature.cryptocore.ServerTwoPartyObject;
 import cz.vut.feec.xklaso00.groupsignature.cryptocore.SignatureProof;
 import cz.vut.feec.xklaso00.groupsignature.fileManaging.FileManagerClass;
+import cz.vut.feec.xklaso00.groupsignature.fileManaging.FileOfManager;
 import cz.vut.feec.xklaso00.groupsignature.gui.ManagerWindow;
 
 import javax.swing.*;
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import static cz.vut.feec.xklaso00.groupsignature.cryptocore.GroupSignatureFunctions.checkSignatureWithPK;
 import static java.lang.Thread.sleep;
 
 public class ModelViewHandle {
-
+    //private static char[] pass;
+    //private static HashMap<String,byte[][]> passesHashes;
+    //private static byte[] aesKey;
+    private static byte[][] hashSaltAesKey;
     private Server server;
     private ServerTwoPartyObject toSend;
     public ModelViewHandle(){
@@ -280,11 +281,83 @@ public class ModelViewHandle {
             }
 
     }
+    /*public static boolean loadPasses(){
+        passesHashes=FileManagerClass.loadPasses();
+        if (passesHashes==null){
+            passesHashes=new HashMap<>();
+            FileManagerClass.savePassword(passesHashes);
+            return false;
+        }
+        else
+            return true;
+    }*/
+    public static int registerMan(FileOfManager fileOfManager,char[] pass1,char []pass2){
+        if(!Arrays.equals(pass1,pass2)){
+            System.out.println("Not same password");
+            return -1;
+        }
+        if(pass1.length<1){
+            System.out.println("no password");
+            return -2;
+        }
+
+
+        byte[] salt=FileManagerClass.generateSalt(16);
+        byte[][] ars=FileManagerClass.hashPassword(pass1,salt);
+        /*byte[][] passSalt=new byte[2][];
+        passSalt[0]=ars[0];
+        passSalt[1]=ars[1];
+        System.out.println(Instructions.bytesToHex(passSalt[0]));
+        System.out.println(Instructions.bytesToHex(passSalt[1]));*/
+        //passesHashes.put(fileOfManager.getManagerID().toString(16),ars);
+        String filename=FileManagerClass.saveManagerEncrypted(ars,fileOfManager);
+        //FileManagerClass.savePassword(passesHashes);
+        return 0;
+    }
+    public static int loginManager(char[] pass1, String fileName){
+        /*int start = fileName.lastIndexOf("/") + 1; // find the last index of
+        if (start==-1 || start==0)
+            start = fileName.lastIndexOf("\\") + 1;
+        System.out.println("START IS "+start);
+        int end = fileName.indexOf("_"); // find the index of "_"
+        String result = fileName.substring(start, end);
+        System.out.println("theIDStringIS "+result);
+        byte[][] HashAndSalt =passesHashes.get(result);
+        byte[][] outputFromHashes=FileManagerClass.hashPassword(pass1,HashAndSalt[1]);
+        if(!Arrays.equals(HashAndSalt[0],outputFromHashes[0])){
+            System.out.println("probably wrong pass");
+            return -1;
+        }*/
+
+        //aesKey=outputFromHashes[2];
+        //pass=pass1;
+        int check=FileManagerClass.checkPasswordForFile(fileName,pass1);
+        if(check==0){
+            hashSaltAesKey=FileManagerClass.getLastHashSaltAesKey();
+            FileOfManager fileOfManager=FileManagerClass.loadManagerFileEnc(fileName,hashSaltAesKey[2]);
+            Server server=new Server(fileOfManager);
+            new ManagerWindow(server);
+            return 0;
+        }
+        //hashSaltAesKey=outputFromHashes;
+       else {
+           System.out.println("wrong pass probably");
+           return check;
+        }
+
+
+    }
     public Server getServer() {
         return server;
     }
 
     public ServerTwoPartyObject getToSend() {
         return toSend;
+    }
+
+
+
+    public static byte[][] getHashSaltAesKey() {
+        return hashSaltAesKey;
     }
 }

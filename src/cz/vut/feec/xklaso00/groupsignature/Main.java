@@ -16,6 +16,7 @@ public class Main {
 
 
         Mcl.SystemInit(Mcl.BN254);
+        //ModelViewHandle.loadPasses();
         /*cz.vut.feec.xklaso00.semestralproject.Server server= new cz.vut.feec.xklaso00.semestralproject.Server();
         cz.vut.feec.xklaso00.semestralproject.Client client= new cz.vut.feec.xklaso00.semestralproject.Client();
 

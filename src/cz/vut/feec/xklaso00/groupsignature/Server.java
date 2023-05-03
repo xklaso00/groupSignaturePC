@@ -47,7 +47,7 @@ public class Server {
         ManKey= new Fr(serverPrivateECKey.toString(),10);
         managerID=new BigInteger(32,random);
         FileOfManager manFile=new FileOfManager(serverPrivateECKey,managerID);
-        String managerFileName= FileManagerClass.saveManagerKey(manFile);
+        //String managerFileName= FileManagerClass.saveManagerKey(manFile);
         managerPublicKey=new G2();
         Mcl.mul(managerPublicKey,GroupSignatureFunctions.getG2(),ManKey);
         FileOfGroup fileOfGroup=new FileOfGroup(managerID,managerPublicKey);
@@ -64,7 +64,7 @@ public class Server {
         serverPrivateECKey=manFile.getPrivateKey();
         n=new BigInteger("2523648240000001BA344D8000000007FF9F800000000010A10000000000000D",16);
         ManKey= new Fr(serverPrivateECKey.toString(),10);
-        System.out.println("mankey is"+ManKey.toString());
+        //System.out.println("mankey is"+ManKey.toString());
         managerID = manFile.getManagerID();
         managerPublicKey=new G2();
         Mcl.mul(managerPublicKey,GroupSignatureFunctions.getG2(),ManKey);
@@ -72,6 +72,18 @@ public class Server {
         //load revokedUsers here
         revokedUsers=FileManagerClass.loadRevokedUsers(managerID);
 
+    }
+    public Server(FileOfManager manFile){
+        serverPrivateECKey=manFile.getPrivateKey();
+        n=new BigInteger("2523648240000001BA344D8000000007FF9F800000000010A10000000000000D",16);
+        ManKey= new Fr(serverPrivateECKey.toString(),10);
+        //System.out.println("mankey is"+ManKey.toString());
+        managerID = manFile.getManagerID();
+        managerPublicKey=new G2();
+        Mcl.mul(managerPublicKey,GroupSignatureFunctions.getG2(),ManKey);
+        activeManagerFile=manFile;
+        //load revokedUsers here
+        revokedUsers=FileManagerClass.loadRevokedUsers(managerID);
     }
 
     public PaillierKeyPair runSetUpOfPaillier(){
@@ -235,7 +247,8 @@ public class Server {
         G2 invPubKey=new G2();
         Mcl.neg(invPubKey,pubKeyUser);
         activeManagerFile.addUserToManagerHashMap(userID,invPubKey);
-        FileManagerClass.saveManagerKey(activeManagerFile);
+        //FileManagerClass.saveManagerKey(activeManagerFile);
+        FileManagerClass.saveManagerEncrypted(ModelViewHandle.getHashSaltAesKey(),activeManagerFile);
     }
 
     public BigInteger myModPow(BigInteger num,BigInteger exponent,BigInteger modulus){
@@ -338,4 +351,5 @@ public class Server {
     public BigInteger getServerPrivateECKey() {
         return serverPrivateECKey;
     }
+
 }

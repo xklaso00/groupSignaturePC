@@ -41,34 +41,20 @@ public class PDFManager {
         }
         public static String saveSignatureToMetadata(String src, byte[] signature){
             try {
-
                 Path path= Paths.get(src);
                 byte[] fileBytes= Files.readAllBytes(path);
                 PdfReader reader=new PdfReader(fileBytes);
-                //PdfReader reader=new PdfReader(src);
-                /*StringBuilder sb=new StringBuilder();
-                String rm= src.split("\\.")[0];
-                System.out.println("split " +rm);
-                sb.append(rm);
-                sb.append("_signed.pdf");
-                String Destination=sb.toString();*/
-
-
-                //PdfStamper stamper=new PdfStamper(reader,new FileOutputStream(Destination));
                 PdfStamper stamper=new PdfStamper(reader,new FileOutputStream(src));
                 HashMap<String,String> info=reader.getInfo();
                 info.put("GroupSignature", Instructions.bytesToHex(signature));
                 stamper.setMoreInfo(info);
                 stamper.close();
                 reader.close();
-
                 return src;
-
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
-
         }
         public static byte[] readSigFromMetadata(String src){
             byte[] sigBytes=null;
