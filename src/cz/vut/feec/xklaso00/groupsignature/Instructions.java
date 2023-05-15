@@ -44,6 +44,13 @@ public class Instructions {
             (byte)0x00,
             (byte)0x00,
             (byte)0x00};
+    private static byte [] FAILEDNFC = new byte[]{(byte)0x80, //with this command we want the user to give us his zk and e2
+            (byte)0x67,
+            (byte)0x00,
+            (byte)0x00,
+            (byte)0x00,
+            (byte)0x00,
+            (byte)0x00};
     private static byte[] A_OKAY ={ (byte)0x90,
             (byte)0x00};
     private static byte[] NOT_YET ={ (byte)0xFF,
@@ -169,5 +176,9 @@ public class Instructions {
 
     public static byte[] getFAILEDZK() {
         return FAILEDZK;
+    }
+
+    public static byte[] getFAILEDNFC() {
+        return FAILEDNFC;
     }
 }

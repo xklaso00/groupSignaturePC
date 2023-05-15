@@ -19,18 +19,30 @@ public class Terminal {
     private Card card = null;
     private CardChannel channel=null;
     private BigInteger lastID;
+    private static long totalStart;
+    private static int timeChange=0;
     public int InitializeConnection(){
 
-
+        CardTerminal terminal;
         try {
             TerminalFactory factory = TerminalFactory.getDefault();
             List<CardTerminal> terminals = null;
-            terminals = factory.terminals().list();
-            System.out.println("Terminals: " + terminals);
-            CardTerminal terminal = terminals.get(0);
+            try {
+                terminals = factory.terminals().list();
+                System.out.println("Terminals: " + terminals);
+                terminal = terminals.get(0);
+            }catch (Exception te){
+                te.printStackTrace();
+                return -3;
+            }
+
+
 
             while (!terminal.isCardPresent()) ;
                 // Connect wit the card, using supported protocol, for some reason T=0 not working
+            if(((timeChange)%2)==0)
+                totalStart=System.nanoTime();
+            timeChange++;
             card = terminal.connect("*");
             System.out.println("Card: " + card);
             channel = card.getBasicChannel();
@@ -43,35 +55,48 @@ public class Terminal {
                 return 0;
             else
                 return -2;
-        } catch (CardException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+
         }
 
 
         return -1;
     }
-    public boolean sendPublicParameters(ServerTwoPartyObject obj){
+    public int sendPublicParameters(ServerTwoPartyObject obj){
+
         byte[] com=Instructions.makeSetupCommand(obj);
-        InitializeConnection();
+        System.out.println("The command is this long" +com.length);
+        int init=InitializeConnection();
+        if(!(init==0)){
+            return init;
+        }
         try {
 
+            long start=System.nanoTime();
             ResponseAPDU responseAPDU=channel.transmit(new CommandAPDU(com));
             byte[] byteResponse=null;
             byteResponse=responseAPDU.getBytes();
             System.out.println("I got back:" +Instructions.bytesToHex(byteResponse));
+            System.out.println("To send the parameters and get ok took "+(System.nanoTime()-start)/1000000+" ms");
             card.disconnect(true);
             if(Instructions.isEqual(Instructions.getaOkay(),byteResponse)){
-                return true;
+                return 0;
             }
         } catch (CardException e) {
             e.printStackTrace();
+            return -4;
         }
-        return false;
+        return -5;
     }
     public int userZKRequest(Server server){
-        InitializeConnection();
+        int init=InitializeConnection();
+        if(!(init==0)){
+            System.out.println("could not connect to the app");
+            return -3;
+        }
         try {
-
+            long fcStart=System.nanoTime();
             byte[] com= Instructions.getCOMGIVEZKUSER();
             ResponseAPDU responseAPDU=channel.transmit(new CommandAPDU(com));
             byte[] byteResponse=null;
@@ -96,7 +121,9 @@ public class Terminal {
                 ObjectInputStream ois =new ObjectInputStream(bis);
                 UserZKObject userZK=(UserZKObject) ois.readObject();
                 //boolean secondProof=server.checkPKUser(userZK.getZets(),userZK.getE2(),userZK.getC2Goth(),userZK.geteClientHash(),userZK.getClientPubKey());
+                long start=System.nanoTime();
                 boolean secondProof= NIZKPKFunctions.checkPKUser(userZK.getZets(),userZK.getE2(),userZK.getC2Goth(),userZK.geteClientHash(),userZK.getClientPubKey(),server.getE1(),server.getN(),server.getKp());
+                System.out.println("Check Client proof took "+(System.nanoTime()-start)/1000000+" ms");
                 System.out.println("is client NIZKPK legit "+secondProof);
                 if(!secondProof) {
                     ResponseAPDU responseAPDU1=channel.transmit(new CommandAPDU(Instructions.getFAILEDZK()));
@@ -106,18 +133,21 @@ public class Terminal {
 
                 //we write out for test
                 //server.getActiveManagerFile().writeOutUsersSaved();
-
+                start=System.nanoTime();
                 G1 e2=NIZKPKFunctions.computeSigningKeyRandomized(userZK.getE2(),server.getKp(),server.getN());
+                System.out.println("e2 dec took "+(System.nanoTime()-start)/1000000+" ms");
                 byte[] e2COM= Instructions.createE2COM(e2);
                 System.out.println("Sending e2 ");
                 //modded for watch remove for phone
-                //InitializeConnection();
+                InitializeConnection();
 
 
                 ResponseAPDU responseAPDU1=channel.transmit(new CommandAPDU(e2COM));
                 byteResponse=responseAPDU1.getBytes();
                 System.out.println("Response for e2 is "+Instructions.bytesToHex(byteResponse));
                 card.disconnect(true);
+                System.out.println("Total time of the function checkPk and decE2 etc is  "+(System.nanoTime()-fcStart)/1000000+" ms");
+                System.out.println("Total time with pauses is  "+(System.nanoTime()-totalStart)/1000000+" ms");
                 server.saveUserKeyToFile(userZK.getClientPubKey(),userZK.getClientID());
                 System.out.println("DONE ON MY PART ");
                 lastID=userZK.getClientID();
@@ -125,12 +155,22 @@ public class Terminal {
 
             }catch (Exception e){
                 e.printStackTrace();
+                return -4;
             }
 
 
 
         } catch (CardException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            System.out.println("Problem with NFC, try again");
+
+            try {
+                ResponseAPDU responseAPDU1=channel.transmit(new CommandAPDU(Instructions.getFAILEDNFC()));
+                card.disconnect(true);
+            } catch (CardException ex) {
+               e.printStackTrace();
+            }
+            return -4;
         }
         return 0;
     }
@@ -144,7 +184,9 @@ public class Terminal {
 
     //pass the hash of the file modded with n
     public int sendFileToSign(byte[] fileHash,boolean checkSig){
+
         int connectionInitialized=InitializeConnection();
+        long comStart=System.nanoTime();
         if(connectionInitialized!=0)
             return connectionInitialized;
         byte[] fileCom=Instructions.makeSignFileCommand(fileHash);
@@ -163,13 +205,14 @@ public class Terminal {
             }
             //ResponseAPDU responseAPDU=channel.transmit(new CommandAPDU(fileCom));
             //byte[] byteResponse=responseAPDU.getBytes();
+            System.out.println("Total sign time with coms is "+(System.nanoTime()-comStart)/1000000+" ms");
             card.disconnect(true);
             byte[] SignObject= Arrays.copyOfRange(byteResponse,0,byteResponse.length-2);
             //should check the last 2 bytes here
             byte [] checkBytes=Arrays.copyOfRange(byteResponse,byteResponse.length-2,byteResponse.length);
 
             if(!(Instructions.isEqual(checkBytes,Instructions.getaOkay()))){
-                System.out.println("Probably did nto get all bytes");
+                System.out.println("Probably did not get all bytes");
                 return -6;
             }
             ByteArrayInputStream bis = new ByteArrayInputStream(SignObject);
@@ -197,7 +240,11 @@ public class Terminal {
             }
             else {
                 System.out.println("Saving Sig Without Check");
-                FileManagerClass.saveSignature(signatureProof);
+                int saveRet=FileManagerClass.saveSignature(signatureProof);
+                System.out.println("Total sign time with save is "+(System.nanoTime()-comStart)/1000000+" ms");
+                if(saveRet==-1){
+                    return -7;
+                }
                 return 0;
             }
 

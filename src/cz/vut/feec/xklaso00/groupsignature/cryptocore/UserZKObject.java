@@ -4,7 +4,7 @@ import com.herumi.mcl.G2;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-
+//object sent from the user to the manager with his ZKuser and E2
 public class UserZKObject implements Serializable {
     private BigInteger[] Zets;
     private BigInteger e2;

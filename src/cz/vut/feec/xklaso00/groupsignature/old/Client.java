@@ -1,4 +1,4 @@
-package cz.vut.feec.xklaso00.groupsignature;
+package cz.vut.feec.xklaso00.groupsignature.old;
 
 
 import com.herumi.mcl.Fr;
@@ -114,7 +114,7 @@ public class Client {
         t2Check=t2Check.multiply(ce);
         t2Check=t2Check.mod(nGoth);
 
-        BigInteger checkHash= NIZKPKFunctions.hashTsServer(t1Check,t2Check);
+        BigInteger checkHash= NIZKPKFunctions.hashTs(t1Check,t2Check);
 
         //Log.i(TAG,"t1  "+t1Check.toString());
         //Log.i(TAG,"t2  "+t2Check.toString());

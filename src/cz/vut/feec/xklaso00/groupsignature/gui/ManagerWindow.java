@@ -25,6 +25,7 @@ public class ManagerWindow {
     private JLabel openLabel;
     private JTextArea textArea1;
     private JPanel panel3;
+    private JCheckBox reGenerateSetupEachCheckBox;
     JFrame frame= new JFrame("Manager Window");
     ModelViewHandle modelViewHandle;
     public ManagerWindow(Server server){
@@ -77,7 +78,7 @@ public class ManagerWindow {
         managerIDLabel.setText(managerIDLabel.getText()+modelViewHandle.getServer().getManagerID().toString(16));
         modelViewHandle.fillTextAreaWithUsers(textArea1);
         textArea1.setEditable(false);
-
+        reGenerateSetupEachCheckBox.setOpaque(false);
 
 
 
@@ -91,7 +92,13 @@ public class ManagerWindow {
         addUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                modelViewHandle.runSetupForTwoParty(addUserLabel,textArea1);
+                if(reGenerateSetupEachCheckBox.isSelected()){
+                    modelViewHandle.runSetupForTwoParty(addUserLabel,textArea1,true);
+                }
+                else {
+                    modelViewHandle.runSetupForTwoParty(addUserLabel,textArea1,false);
+                }
+
 
             }
 

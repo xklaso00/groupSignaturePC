@@ -24,6 +24,7 @@ public class ModelViewHandle {
     private static byte[][] hashSaltAesKey;
     private Server server;
     private ServerTwoPartyObject toSend;
+    //private static SwingWorker<Boolean, Void> workerSendPublic=null;
     public ModelViewHandle(){
 
     }
@@ -46,8 +47,11 @@ public class ModelViewHandle {
             return fileNameToLoad;
         }
     }
-    public boolean runSetupForTwoParty(JLabel addUserLabel, JTextArea textArea){
-
+    public boolean runSetupForTwoParty(JLabel addUserLabel, JTextArea textArea,boolean reRunSetup){
+        /*if(workerSendPublic!=null && !workerSendPublic.isDone()){
+            System.out.println("Should kill worker");
+            workerSendPublic.cancel(true);
+        }*/
         SwingWorker<Boolean, Void> worker2 = new SwingWorker<Boolean, Void>() {
             int ret=-1;
             Terminal terminal;
@@ -61,6 +65,14 @@ public class ModelViewHandle {
                 }
                 if(ret==0)
                     return true;
+                else if(ret==4){
+                    //we try to receive it one more time
+                    ret=terminal.userZKRequest(server);
+                    if(ret!=0)
+                        return false;
+                    else
+                        return true;
+                }
                 else
                     return false;
             }
@@ -69,6 +81,7 @@ public class ModelViewHandle {
                 boolean status;
                 try {
                     status=get();
+                    //workerSendPublic=null;
                     if(status) {
                         addUserLabel.setText("User "+terminal.getLastID().toString(16) +" added.");
                         fillTextAreaWithUsers(textArea);
@@ -76,8 +89,13 @@ public class ModelViewHandle {
                     else {
                         if(ret==-5){
                             addUserLabel.setText("Could not verify userZK");
-                        }
-                        else
+                        } else if (ret==-2) {
+                            addUserLabel.setText("Problem with the answer");
+                        } else if (ret==-3) {
+                            addUserLabel.setText("Could not initialize connection");
+                        } else if (ret==-4) {
+                            addUserLabel.setText("NFC error, run again");
+                        } else
                             addUserLabel.setText("Something Went Wrong");
                     }
                 } catch (Exception e) {
@@ -89,10 +107,15 @@ public class ModelViewHandle {
 
 
         SwingWorker<Boolean, Void> workerSendPublic = new SwingWorker<Boolean, Void>() {
+            int ret;
             @Override
             protected Boolean doInBackground() throws Exception {
                 Terminal terminal=new Terminal();
-                return terminal.sendPublicParameters(toSend);
+                ret=terminal.sendPublicParameters(toSend);
+                if(ret==0)
+                    return true;
+                else
+                    return false;
 
             }
             // GUI can be updated from this method.
@@ -105,10 +128,24 @@ public class ModelViewHandle {
                         worker2.execute();
                     }
                     else {
-                        addUserLabel.setText("Something went wrong, try again...");
+                        if(ret==-1){
+                            addUserLabel.setText("Something went wrong, try again...");
+                        } else if (ret==-2) {
+                            addUserLabel.setText("Mobile did not recognize the app");
+                        } else if (ret==-3) {
+                            addUserLabel.setText("No terminals found");
+                        } else if (ret==-4) {
+                            addUserLabel.setText("NFC exception, run again");
+                        } else if (ret==-5) {
+                            addUserLabel.setText("NFC transmission failed, run again");
+                        }else {
+                            addUserLabel.setText("Something went wrong, try again...");
+                        }
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    System.out.println("Thread got Killed");
                 }
             }
 
@@ -118,13 +155,19 @@ public class ModelViewHandle {
         SwingWorker<Boolean, Void> worker1 = new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() throws Exception {
-                server.runSetUpOfPaillier();
-               /* BigInteger e1= server.computeE1();
-                BigInteger[] Zs=server.createZKIssuer();
-                toSend=new ServerTwoPartyObject(server.getPaillierPublicKeyFromServer(),e1,Zs,server.getcGoth(),server.geteHash(),server.getManagerID());*/
-                toSend= NIZKPKFunctions.computeE1andZKManager(server.getKp(),server.getServerPrivateECKey(),server.getManagerID());
-                server.setE1(toSend.getE1());
+                //we check that reRun is false, server got generated set-up and it has the two-party object
+                if(!reRunSetup&&(server.isGotSetup())&& (server.getToSendStored()!=null)){
+                    toSend=server.getToSendStored();
+                    server.setE1(toSend.getE1());
+                }//else we run it again
+                else {
+                    server.runSetUpOfPaillier();
+                    toSend= NIZKPKFunctions.computeE1andZKManager(server.getKp(),server.getServerPrivateECKey(),server.getManagerID());
+                    server.setE1(toSend.getE1());
+                    server.setToSendStored(toSend);
+                }
                 return true;
+
             }
             // GUI can be updated from this method.
             protected void done() {
@@ -142,6 +185,7 @@ public class ModelViewHandle {
             }
 
         };
+
         worker1.execute();
         addUserLabel.setText("Generating Setup...wait please");
 
@@ -167,7 +211,7 @@ public class ModelViewHandle {
     }
     public void signDocument(JLabel label){
         Terminal terminal=new Terminal();
-        byte[] fileHash=FileManagerClass.ChooseAndHashFile(WeakBB.genNinBigInt());
+        byte[] fileHash=FileManagerClass.ChooseAndHashFile(GroupSignatureFunctions.genNinBigInt());
         if(fileHash==null) {
             label.setText("Error in choosing the file");
             return;
@@ -178,7 +222,7 @@ public class ModelViewHandle {
             int returnCode;
             @Override
             protected Boolean doInBackground() throws Exception {
-                returnCode=terminal.sendFileToSign(fileHash,true);
+                returnCode=terminal.sendFileToSign(fileHash,false);
                 if (returnCode==0)
                     return true;
                 else
@@ -203,6 +247,10 @@ public class ModelViewHandle {
                             label.setText("Error loading key for check");
                         else if(returnCode==-5)
                             label.setText("Not legit signature.");
+                        else if (returnCode==-7)
+                            label.setText("Could not save to file");
+                        else
+                            label.setText("Something went wrong");
 
                     }
                 } catch (Exception e) {
@@ -214,9 +262,10 @@ public class ModelViewHandle {
         worker.execute();
 
     }
-    public void checkSignature(JLabel label){
-        byte[] hash=FileManagerClass.ChooseAndHashFile(WeakBB.genNinBigInt());
+    public void checkSignature(JLabel label,JLabel revokeLabel){
+        byte[] hash=FileManagerClass.ChooseAndHashFile(GroupSignatureFunctions.genNinBigInt());
         SignatureProof sp=FileManagerClass.loadSignature(FileManagerClass.getLastPathOfPDF());
+        long start=System.nanoTime();
         if(sp!=null){
             BigInteger hashBig=new BigInteger(hash);
             Fr hashFr=new Fr(hashBig.toString(10));
@@ -224,7 +273,7 @@ public class ModelViewHandle {
             boolean isLegit= GroupSignatureFunctions.checkProof(sp,hashFr,groupPublicKey);
             HashSet<byte[]> revoked= FileManagerClass.loadRevokedUsers(sp.groupID);
             Iterator<byte[]> iterator = revoked.iterator();
-
+            long revT=System.nanoTime();
             while(iterator.hasNext()){
                 byte[] invKey=iterator.next();
                 G2 invKeyG2=new G2();
@@ -232,12 +281,15 @@ public class ModelViewHandle {
                 int revokeResult= checkSignatureWithPK(invKeyG2,sp.getSiAph(),sp.getSiDash());
                 if(revokeResult==0){
                     System.out.println("This user is revoked");
+                    revokeLabel.setText("Revoked User");
                     isLegit=false;
                     break;
                 }
             }
+            System.out.println("Revocation check for "+revoked.size()+" revoked users took "+(System.nanoTime()-revT)/1000+ " microS");
             if(isLegit){
                 System.out.println("legit sig");
+                System.out.println("Total time of check sig is  "+(System.nanoTime()-start)/1000000+" ms");
                 label.setText("The signature is legit from group "+sp.groupID.toString(16));
             }
             else{
@@ -251,9 +303,14 @@ public class ModelViewHandle {
         }
     }
     public void openSignature(JLabel label){
-        String choose=FileManagerClass.chooseFile("Choose pdf to open the signature of");
+        String choose=FileManagerClass.choosePDFFile();
+
         SignatureProof sp=FileManagerClass.loadSignature(choose);
+        if(sp==null)
+            label.setText("No Signature found");
+        long start=System.nanoTime();
         BigInteger userID= server.openSignature(sp);
+        System.out.println("opening took  "+(System.nanoTime()-start)/1000+" microS");
         if(userID==null)
             label.setText("The user is not in my group.");
         else

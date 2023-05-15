@@ -2,6 +2,7 @@ package cz.vut.feec.xklaso00.groupsignature.gui;
 
 import cz.vut.feec.xklaso00.groupsignature.ModelViewHandle;
 import cz.vut.feec.xklaso00.groupsignature.Server;
+import cz.vut.feec.xklaso00.groupsignature.cryptocore.NIZKPKFunctions;
 import cz.vut.feec.xklaso00.groupsignature.fileManaging.FileManagerClass;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class StartWindow {
     private JLabel managerLabel;
     private JPanel Panel1;
     private JPanel Panel2;
-
+    private JButton gmpOp;
 
 
     private ModelViewHandle modelViewHandle;
@@ -38,6 +39,8 @@ public class StartWindow {
         catch (Exception e){
             System.out.println("Error loading UIManager");
         }*/
+        ImageIcon iconEnGMP=null;
+        ImageIcon iconDisGMP=null;
         try {
             FileManagerClass.tryFiles();
             frame.setLayout(new BorderLayout());
@@ -57,7 +60,13 @@ public class StartWindow {
             managerButton.setIcon(iconMan);
             ImageIcon iconGen=new ImageIcon("files/icons/generateButton.png");
             createManagerButton.setIcon(iconGen);
-
+            iconEnGMP=new ImageIcon("files/icons/enGMPbutton.png");
+            iconDisGMP=new ImageIcon("files/icons/disGMPbutton.png");
+            if(NIZKPKFunctions.isUseGMP()){
+                gmpOp.setIcon(iconDisGMP);
+            }
+            else
+                gmpOp.setIcon(iconEnGMP);
 
             if(icon!=null)
                 clientButton.setText("");
@@ -67,6 +76,8 @@ public class StartWindow {
                 managerButton.setText("");
             if(iconGen!=null)
                 createManagerButton.setText("");
+            if(iconEnGMP!=null && iconDisGMP!=null)
+                gmpOp.setText("");
 
         }catch (Exception e){
             System.out.println("Error in loading the background");
@@ -84,6 +95,9 @@ public class StartWindow {
 
         frame.setVisible(true);
         modelViewHandle=new ModelViewHandle();
+        if(NIZKPKFunctions.isUseGMP()){
+            gmpOp.setText("Disable GMP");
+        }
         createManagerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,7 +114,7 @@ public class StartWindow {
                 if(!retString.equals(null)){
                     frame.dispose();
                 }*/
-                String path=FileManagerClass.chooseFile("Choose file");
+                String path=FileManagerClass.chooseFile("Choose manager _keyEnc.ser file");
                 new LoginWindow(path,frame);
             }
         });
@@ -123,6 +137,35 @@ public class StartWindow {
         });
 
 
+        ImageIcon finalIconDisGMP = iconDisGMP;
+        ImageIcon finalIconEnGMP = iconEnGMP;
+        gmpOp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!NIZKPKFunctions.isUseGMP()){
+
+                    System.loadLibrary("gmp_forJava");
+                    if(NIZKPKFunctions.testGMP()!=0){
+                        return;
+                    }
+                    System.out.println("GMP enabled");
+                    NIZKPKFunctions.setUseGMP(true);
+
+                    if(!(finalIconDisGMP ==null)) {
+                        gmpOp.setIcon(finalIconDisGMP);
+                    }else
+                        gmpOp.setText("Disable GMP");
+                }
+                else{
+                    NIZKPKFunctions.setUseGMP(false);
+                    System.out.println("GMP disabled");
+                    if(!(finalIconEnGMP ==null)){
+                        gmpOp.setIcon(finalIconEnGMP);
+                    }else
+                        gmpOp.setText("Enable GMP");
+                }
+            }
+        });
     }
 
 }

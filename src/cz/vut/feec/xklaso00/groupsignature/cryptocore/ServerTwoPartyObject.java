@@ -2,7 +2,7 @@ package cz.vut.feec.xklaso00.groupsignature.cryptocore;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-
+//serializable object from manager -> client, it has setup, e1 and zk_m inside
 public class ServerTwoPartyObject implements Serializable {
     private PaillierPublicKey paillierPublicKey;
     private BigInteger e1;

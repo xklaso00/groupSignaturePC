@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="628" height="400"/>
+      <xy x="20" y="20" width="705" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -45,7 +45,7 @@
           <component id="2e814" class="javax.swing.JLabel" binding="managerLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="300" height="-1"/>
+                <preferred-size width="300" height="40"/>
                 <maximum-size width="300" height="-1"/>
               </grid>
             </constraints>
@@ -55,7 +55,7 @@
           </component>
         </children>
       </grid>
-      <grid id="98ed" binding="Panel2" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="98ed" binding="Panel2" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="1" row-span="5" col-span="1" vsize-policy="3" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -65,7 +65,7 @@
         <children>
           <component id="25e46" class="javax.swing.JButton" binding="clientButton">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="295" height="145"/>
                 <maximum-size width="295" height="145"/>
               </grid>
@@ -77,7 +77,7 @@
           </component>
           <component id="e48b6" class="javax.swing.JButton" binding="verifierButton">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="295" height="145"/>
                 <maximum-size width="295" height="145"/>
               </grid>
@@ -93,6 +93,18 @@
             </constraints>
             <properties>
               <text value=""/>
+            </properties>
+          </component>
+          <component id="ea31e" class="javax.swing.JButton" binding="gmpOp">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="30"/>
+                <maximum-size width="150" height="30"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value="Enable GMP"/>
+              <toolTipText value="Enables/Disables GMP support in computations"/>
             </properties>
           </component>
         </children>

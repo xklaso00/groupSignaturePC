@@ -12,6 +12,7 @@ public class VerifierWindow {
     private JButton verButton;
     private JButton backToMenuButton;
     private JLabel checkLabel;
+    private JLabel revokedLabel;
     JFrame frame= new JFrame("Verifier App");
     ModelViewHandle modelViewHandle;
 
@@ -49,7 +50,7 @@ public class VerifierWindow {
         verButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                modelViewHandle.checkSignature(checkLabel);
+                modelViewHandle.checkSignature(checkLabel,revokedLabel);
             }
         });
         backToMenuButton.addActionListener(new ActionListener() {

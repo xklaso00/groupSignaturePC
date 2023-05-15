@@ -52,18 +52,27 @@ public class PaillierKeyPair {
         //paillierPrivateKey= new PaillierPrivateKey(lambda,Mu,n,nn,phi,phiNGoth);
         paillierPrivateKey= new PaillierPrivateKey(lambda,Mu,n,nn,phi);
     }
+    //the setup function pretty much, generates the parameters, this one takes a generated goth group
     public PaillierKeyPair(int bitSize, GothGroup gothGroup){
+        long st=System.nanoTime();
         p= NIZKPKFunctions.generateRandomPrime(bitSize/2);
         q= NIZKPKFunctions.generateRandomPrime(bitSize/2);
+        long et=System.nanoTime();
+        System.out.println("Prime generation took "+(et-st)/1000000+" ms");
         BigInteger n= p.multiply(q);
         BigInteger nn= n.pow(2);
         //System.out.println("nn len is "+nn.bitLength());
         BigInteger lambda= this.lcm(p.subtract(BigInteger.ONE),q.subtract(BigInteger.ONE));
 
         BigInteger phi = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
+        long st2=System.nanoTime();
         BigInteger g =generateG(bitSize,n,phi,nn);
+        et=System.nanoTime();
+        System.out.println("G generation took "+(et-st2)/1000000+" ms");
         paillierPublicKey= new PaillierPublicKey(n,g,nn,bitSize,gothGroup.getnGoth(),gothGroup.gethGoth(),gothGroup.getgGoth());
         paillierPrivateKey= new PaillierPrivateKey(lambda,Mu,n,nn,phi);
+        et=System.nanoTime();
+        //System.out.println("KP setup took "+(et-st)/1000000+" ms");
     }
     private BigInteger lcm(BigInteger a, BigInteger b){
         if (a.signum() == 0 || b.signum() == 0)

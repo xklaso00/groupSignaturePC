@@ -2,23 +2,37 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="GroupSig:jar" />
+      <artifact name="GroupSig:jar3" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="split into packages, now working on manager password and encrypting the file">
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/LoginWindow.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/LoginWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/RegisterWindow.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/RegisterWindow.java" afterDir="false" />
+    <list default="true" id="5dbf79bb-b150-4640-af93-3b5dc6bb45df" name="Changes" comment="added password protection for the manager, the files are now encrypted for the object">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/GroupSig_jar3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs/gmp_forJava.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/f547_key.ser" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/old/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Instructions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Instructions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/ModelViewHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/ModelViewHandle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/WeakBB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/GroupSignatureFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/GroupSignatureFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/NIZKPKFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/NIZKPKFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/PaillierKeyPair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/PaillierKeyPair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/ServerTwoPartyObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/ServerTwoPartyObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/SignatureProof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/SignatureProof.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/UserZKObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/cryptocore/UserZKObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/fileManaging/FileManagerClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/fileManaging/FileManagerClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/fileManaging/PDFManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/fileManaging/PDFManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/ManagerWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/ManagerWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/ManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/ManagerWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/RegisterWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/RegisterWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/StartWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/StartWindow.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/StartWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/StartWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/VerifierWindow.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/VerifierWindow.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/VerifierWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cz/vut/feec/xklaso00/groupsignature/gui/VerifierWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,19 +63,19 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kita2/IdeaProjects/GroupSig/src/cz/vut/feec/xklaso00/semestralproject/gui&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kita2/IdeaProjects/GroupSig&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kita2\IdeaProjects\GroupSig\libs" />
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig" />
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig\src" />
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig\out\artifacts\GroupSig_jar" />
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig\src\com" />
-      <recent name="C:\Users\kita2\IdeaProjects\GroupSig\libs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig\src\cz\vut\feec\xklaso00\semestralproject\old" />
@@ -69,6 +83,7 @@
       <recent name="C:\Users\kita2\IdeaProjects\GroupSig\src\cz\vut\feec\xklaso00\semestralproject" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cz.vut.feec.xklaso00.groupsignature.old" />
       <recent name="cz.vut.feec.xklaso00.groupsignature.cryptocore" />
       <recent name="cz.vut.feec.xklaso00.groupsignature.fileManaging" />
       <recent name="cz.vut.feec.xklaso00.semestralproject.cryptocore" />
@@ -148,7 +163,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682962018614</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added password protection for the manager, the files are now encrypted for the object">
+      <created>1683104006221</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683104006221</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added password protection for the manager, the files are now encrypted for the object">
+      <created>1683104059363</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683104059363</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -169,6 +198,7 @@
     <MESSAGE value="removed nGoth generation, now we read goth from file.&#10;The signature is now saved to the metadata with itextPDF library. &#10;So to run it you need the itexpdf jar." />
     <MESSAGE value="a commit before splitting in more packages etc" />
     <MESSAGE value="split into packages, now working on manager password and encrypting the file" />
-    <option name="LAST_COMMIT_MESSAGE" value="split into packages, now working on manager password and encrypting the file" />
+    <MESSAGE value="added password protection for the manager, the files are now encrypted for the object" />
+    <option name="LAST_COMMIT_MESSAGE" value="added password protection for the manager, the files are now encrypted for the object" />
   </component>
 </project>

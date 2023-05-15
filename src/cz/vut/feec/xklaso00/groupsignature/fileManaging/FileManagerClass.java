@@ -10,6 +10,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -297,15 +298,37 @@ public class FileManagerClass {
         else
             return null;
     }
+    public static String choosePDFFile(){
+        File file;
+        JFileChooser fileChooser =new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("PDF files", "pdf"));
+        fileChooser.setCurrentDirectory((new File(".")));
+        fileChooser.setDialogTitle("Choose a PDF file");
+        int res=fileChooser.showOpenDialog(null);
+        if(res==JFileChooser.APPROVE_OPTION){
+            file=fileChooser.getSelectedFile();
+            String path=file.getAbsolutePath();
+            file=null;
+            fileChooser=null;
+            return path;
+        }
+        else
+            return null;
+    }
     public static byte[] ChooseAndHashFile(BigInteger nOfCurve){
-        String fileName=chooseFile("Choose a .pdf file");
+        String fileName=choosePDFFile();
         //Path filePath= Paths.get(fileName);
         lastPathOfPDF=fileName;
         //System.out.println("filename "+fileName);
         try {
             //byte[] pdf = Files.readAllBytes(filePath);
+            long ht=System.nanoTime();
             byte [] pdf=PDFManager.getContentBytesOfPDF(fileName);
-            return hashFileBytes(pdf,nOfCurve);
+
+            byte[] hashedBytes=hashFileBytes(pdf,nOfCurve);
+            System.out.println("hashing and getting the file took "+(System.nanoTime()-ht)/1000+" micros");
+            return hashedBytes;
+
 
         } catch (Exception e) {
             System.out.println("Error while reading and hashing the file");
@@ -330,7 +353,7 @@ public class FileManagerClass {
             return null;
         }
     }
-    public static void saveSignature(SignatureProof signatureProof){
+    public static int saveSignature(SignatureProof signatureProof){
         /*String pathString=lastPathOfPDF;
         //System.out.println("Path is "+pathString);
         pathString=pathString.split("\\.")[0];
@@ -364,8 +387,10 @@ public class FileManagerClass {
             String newFile=PDFManager.saveSignatureToMetadata(lastPathOfPDF,sigProofBytes);
             System.out.println("SIG SAVED to "+newFile);
             //System.out.println("sp "+signatureProof.groupID);
+            return 0;
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
 
     }
@@ -387,6 +412,8 @@ public class FileManagerClass {
             return  null;
         }*/
         byte[] sigBytes=PDFManager.readSigFromMetadata(pdfPath);
+        if(sigBytes==null)
+            return null;
         ByteArrayInputStream inputStream=new ByteArrayInputStream(sigBytes);
         try {
             ObjectInputStream objectInputStream=new ObjectInputStream(inputStream);

@@ -36,6 +36,8 @@ public class Server {
     private BigInteger eHash;
     private FileOfManager activeManagerFile;
     private HashSet<byte[]> revokedUsers;
+    private boolean gotSetup=false;
+    private ServerTwoPartyObject toSendStored=null;
     //constructor for creating new manager
     public Server(){
         SecureRandom random=new SecureRandom();
@@ -87,7 +89,7 @@ public class Server {
     }
 
     public PaillierKeyPair runSetUpOfPaillier(){
-
+        long start=System.nanoTime();
         //FileManagerClass.generateAndSaveGothToFile(4561);
         GothGroup gothGroup=FileManagerClass.loadGothParameters();
         if(gothGroup==null) {
@@ -95,6 +97,8 @@ public class Server {
             gothGroup=FileManagerClass.loadGothParameters();
         }
         kp= new PaillierKeyPair(4561,gothGroup);
+        System.out.println("Setup took "+(System.nanoTime()-start)/1000000+" ms");
+        this.gotSetup=true;
         return kp;
     }
 /*
@@ -280,6 +284,7 @@ public class Server {
         HashMap <BigInteger, byte[]> usersHashMap=activeManagerFile.getUserHashMap();
         if(!signatureProof.groupID.equals(managerID))
             return null;
+        long st=System.nanoTime();
         for(Map.Entry<BigInteger, byte[]> set :
                 usersHashMap.entrySet()){
             G2 PKiInv=new G2();
@@ -288,6 +293,7 @@ public class Server {
                 return set.getKey();
             }
         }
+        System.out.println("Open for "+usersHashMap.size()+ " users took " +(st-System.nanoTime())/1000+" microS");
         return null;
     }
     public int revokeUser(BigInteger userID){
@@ -352,4 +358,15 @@ public class Server {
         return serverPrivateECKey;
     }
 
+    public ServerTwoPartyObject getToSendStored() {
+        return toSendStored;
+    }
+
+    public void setToSendStored(ServerTwoPartyObject toSendStored) {
+        this.toSendStored = toSendStored;
+    }
+
+    public boolean isGotSetup() {
+        return gotSetup;
+    }
 }

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GroupSig:jar3">
+    <output-path>$PROJECT_DIR$/out/artifacts/GroupSig_jar3</output-path>
+    <root id="archive" name="GroupSig.jar">
+      <element id="module-output" name="GroupSig" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/itextpdf-5.4.0.jar" path-in-jar="/" />
+      <element id="library" level="project" name="libs" />
+    </root>
+  </artifact>
+</component>
